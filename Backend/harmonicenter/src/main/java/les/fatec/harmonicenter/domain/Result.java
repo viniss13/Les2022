@@ -28,5 +28,4 @@ public class Result {
         entities.add(entity);
     }
 
-
 }

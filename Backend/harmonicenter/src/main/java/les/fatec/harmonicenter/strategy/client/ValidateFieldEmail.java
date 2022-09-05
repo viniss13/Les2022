@@ -2,12 +2,11 @@ package les.fatec.harmonicenter.strategy.client;
 
 import les.fatec.harmonicenter.domain.Client;
 import les.fatec.harmonicenter.domain.DomainEntity;
-import les.fatec.harmonicenter.domain.Enum.Gender;
 import les.fatec.harmonicenter.strategy.IStrategy;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ValidateFieldGender implements IStrategy {
+public class ValidateFieldEmail implements IStrategy {
 
     @Override
     public String process(DomainEntity domainEntity) {
@@ -15,15 +14,11 @@ public class ValidateFieldGender implements IStrategy {
         Client client = (Client) domainEntity;
         StringBuilder msg = new StringBuilder();
 
-        Gender gender = client.getGender();
+        String email = client.getEmail();
 
-        if(gender == null || gender.equals(null)){
-            msg.append("O campo gênero é obrigatório");
+        if(email.isEmpty() || email == null){
+            msg.append("O campo email é obrigatório");
         }
-
-
-//        msg.append(".");
-
 
         return msg.toString();
     }

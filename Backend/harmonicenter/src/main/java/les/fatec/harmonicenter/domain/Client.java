@@ -1,7 +1,9 @@
 package les.fatec.harmonicenter.domain;
 
 import com.sun.istack.NotNull;
-import les.fatec.harmonicenter.DTO.ClientDTO;
+import les.fatec.harmonicenter.DTO.ClientLoginDTO;
+import les.fatec.harmonicenter.DTO.ClientSaveDTO;
+import les.fatec.harmonicenter.DTO.ClientUpdateDTO;
 import les.fatec.harmonicenter.domain.Enum.Gender;
 import les.fatec.harmonicenter.domain.Enum.PhoneType;
 import lombok.AllArgsConstructor;
@@ -51,7 +53,7 @@ public class Client extends DomainEntity{
     @Enumerated( EnumType.STRING)
     private Gender gender;
 
-    public Client(ClientDTO clientDTO) {
+    public Client(ClientSaveDTO clientDTO) {
         this.name = clientDTO.getName();
         this.cpf = clientDTO.getCpf();
         this.email = clientDTO.getEmail();
@@ -61,5 +63,28 @@ public class Client extends DomainEntity{
         this.areaCode = clientDTO.getAreaCode();
         this.phoneNumber = clientDTO.getPhoneNumber();
         this.gender = clientDTO.getGender();
+    }
+
+    public Client(ClientUpdateDTO clientUpdateDTO) {
+
+        Client client = new Client();
+        client.setId(clientUpdateDTO.getClient());
+
+        this.setId(client.getId());
+        this.name = clientUpdateDTO.getName();
+        this.cpf = clientUpdateDTO.getCpf();
+        this.email = clientUpdateDTO.getEmail();
+        this.birthDate = clientUpdateDTO.getBirthDate();
+        this.phoneType = clientUpdateDTO.getType();
+        this.areaCode = clientUpdateDTO.getAreaCode();
+        this.phoneNumber = clientUpdateDTO.getPhoneNumber();
+        this.gender = clientUpdateDTO.getGender();
+    }
+
+    public Client(ClientLoginDTO clientDTO) {
+
+        this.email = clientDTO.getEmail();
+        this.password = clientDTO.getPassword();
+
     }
 }

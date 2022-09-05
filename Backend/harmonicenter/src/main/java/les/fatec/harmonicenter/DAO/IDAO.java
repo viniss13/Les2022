@@ -6,9 +6,12 @@ import java.util.List;
 
 public interface IDAO {
 
-    public DomainEntity create(DomainEntity domainEntity);
-    public void delete(Long id);
-    public void update(DomainEntity domainEntity);
-    public List<DomainEntity> list(DomainEntity domainEntity);
+    DomainEntity create(DomainEntity domainEntity);
+    void delete(Long id);
+    void update(DomainEntity domainEntity);
+    List<DomainEntity> list(DomainEntity domainEntity);
+    DomainEntity login(DomainEntity domainEntity);
+
+    List<DomainEntity> read(DomainEntity domainEntity);
 //    public DomainEntity get(Long id);
 }

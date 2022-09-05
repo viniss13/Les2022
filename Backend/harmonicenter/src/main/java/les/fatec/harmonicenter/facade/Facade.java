@@ -40,7 +40,7 @@ public class Facade extends AbstractFacade implements IFacade{
         errorMessagesList.clear();
         String className = entity.getClass().getName();
         Map<String, List<IStrategy>> entityMap = rules.get(className);
-        List<IStrategy> entityRules = entityMap.get(SALVAR);
+        List<IStrategy> entityRules = entityMap.get(CREATE);
 
         executeRules(entity, entityRules);
 
@@ -57,13 +57,50 @@ public class Facade extends AbstractFacade implements IFacade{
     }
 
     @Override
-    public Result update(DomainEntity domainEntity) {
-        return null;
+    public Result update(DomainEntity entity) {
+        super.initializeMaps();
+        result = new Result();
+        errorMessagesList.clear();
+        String className = entity.getClass().getName();
+        Map<String, List<IStrategy>> entityMap = rules.get(className);
+        List<IStrategy> entityRules = entityMap.get(UPDATE);
+
+        executeRules(entity, entityRules);
+
+        if(errorMessagesList.isEmpty()){
+            IDAO dao = daos.get(className);
+            dao.update(entity);
+            result.addEntities(entity);
+        }else{
+            result.addEntities(entity);
+            result.setMsg(errorMessagesList);
+        }
+
+        return result;
     }
 
     @Override
     public Result delete(DomainEntity domainEntity) {
-        return null;
+
+        super.initializeMaps();
+        result = new Result();
+        errorMessagesList.clear();
+        String className = domainEntity.getClass().getName();
+        Map<String, List<IStrategy>> entityMap = rules.get(className);
+        List<IStrategy> entityRules = entityMap.get(DELETE);
+
+        executeRules(domainEntity, entityRules);
+
+        if(errorMessagesList.isEmpty()){
+            IDAO dao = daos.get(className);
+            dao.delete(domainEntity.getId());
+            result.addEntities(domainEntity);
+        }else{
+            result.addEntities(domainEntity);
+            result.setMsg(errorMessagesList);
+        }
+
+        return result;
     }
 
     @Override
@@ -72,7 +109,57 @@ public class Facade extends AbstractFacade implements IFacade{
     }
 
     @Override
+    public Result read(DomainEntity domainEntity) {
+
+        super.initializeMaps();
+        result = new Result();
+        errorMessagesList.clear();
+        String className = domainEntity.getClass().getName();
+        Map<String, List<IStrategy>> entityMap = rules.get(className);
+        List<IStrategy> entityRules = entityMap.get(READ);
+
+        executeRules(domainEntity, entityRules);
+
+        if(errorMessagesList.isEmpty()){
+            IDAO dao = daos.get(className);
+            List<DomainEntity> entities = dao.read(domainEntity);
+
+            for(DomainEntity entity : entities) result.addEntities(entity);
+        }else{
+            result.addEntities(domainEntity);
+            result.setMsg(errorMessagesList);
+        }
+
+        return result;
+    }
+
+    @Override
     public Result get(DomainEntity domainEntity) {
         return null;
     }
+
+    @Override
+    public Result login(DomainEntity domainEntity) {
+
+        super.initializeMaps();
+        result = new Result();
+        errorMessagesList.clear();
+        String className = domainEntity.getClass().getName();
+        Map<String, List<IStrategy>> entityMap = rules.get(className);
+        List<IStrategy> entityRules = entityMap.get(LOGIN);
+
+        executeRules(domainEntity, entityRules);
+
+        if(errorMessagesList.isEmpty()){
+            IDAO dao = daos.get(className);
+            domainEntity = dao.login(domainEntity);
+            result.addEntities(domainEntity);
+        }else{
+            result.addEntities(domainEntity);
+            result.setMsg(errorMessagesList);
+        }
+
+        return result;
+    }
+
 }

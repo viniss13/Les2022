@@ -10,4 +10,6 @@ public interface IFacade {
     public Result delete(DomainEntity domainEntity);
     public Result list(DomainEntity domainEntity);
     public Result get(DomainEntity domainEntity);
+    public Result login(DomainEntity domainEntity);
+    public Result read(DomainEntity domainEntity);
 }

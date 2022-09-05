@@ -5,7 +5,9 @@ import les.fatec.harmonicenter.domain.DomainEntity;
 import les.fatec.harmonicenter.repository.ClientRepository;
 import les.fatec.harmonicenter.strategy.IStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ValidateExistingEmail implements IStrategy {
 
     @Autowired
