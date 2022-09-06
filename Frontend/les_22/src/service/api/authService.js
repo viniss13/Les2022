@@ -1,20 +1,19 @@
 
-
-import LocalStorageService from "./localStorageService";
+import LocalStorageService from "../config/LocalStorageService";
 
 export const CLIENT_LOGGED = '_usuario_logado'
 
-export default class AuthService{
-    
-    static isAuthenticateClient(){
-        const client = LocalStorageService.obterItem(CLIENT_LOGGED);
+export default class AuthService {
 
-        return client && client.id;
-    }
+  static isAuthenticateClient() {
+    const client = LocalStorageService.obterItem(CLIENT_LOGGED);
 
-    static removeAuthenticateClient(){
+    return client && client.id;
+  }
 
-        LocalStorageService.removerItem(CLIENT_LOGGED);
+  static removeAuthenticateClient() {
 
-    }
+    LocalStorageService.removerItem(CLIENT_LOGGED);
+
+  }
 }

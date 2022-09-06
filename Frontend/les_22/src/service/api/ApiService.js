@@ -2,49 +2,49 @@
 import axios from "axios";
 
 const httpClient = axios.create({
-    baseURL: 'http://localhost:8080'
+  baseURL: 'http://localhost:8080'
 })
 
-class ApiService{
-    constructor(apiurl){
+class ApiService {
+  constructor(apiurl) {
 
-        this.apiurl = apiurl;
-    }
+    this.apiurl = apiurl;
+  }
 
-    post(url, objeto){
+  post(url, objeto) {
 
-        const requestUrl = `${this.apiurl}${url}`
-        
-        return httpClient.post(requestUrl, objeto);
-    }
+    const requestUrl = `${this.apiurl}${url}`
 
-    put(url, objeto){
+    return httpClient.post(requestUrl, objeto);
+  }
 
-        const requestUrl = `${this.apiurl}${url}`
+  put(url, objeto) {
 
-        return httpClient.put(requestUrl, objeto);
-    }
+    const requestUrl = `${this.apiurl}${url}`
 
-    // put(url){
+    return httpClient.put(requestUrl, objeto);
+  }
 
-    //     const requestUrl = `${this.apiurl}${url}`
+  // put(url){
 
-    //     return httpClient.put(requestUrl);
-    // }
+  //     const requestUrl = `${this.apiurl}${url}`
 
-    delete(url){
+  //     return httpClient.put(requestUrl);
+  // }
 
-        const requestUrl = `${this.apiurl}${url}`
+  delete(url) {
 
-        return httpClient.delete(requestUrl);
-    }
+    const requestUrl = `${this.apiurl}${url}`
 
-    get(url){
+    return httpClient.delete(requestUrl);
+  }
 
-        const requestUrl = `${this.apiurl}${url}`
+  get(url) {
 
-        return httpClient.get(requestUrl)
-    }
+    const requestUrl = `${this.apiurl}${url}`
+
+    return httpClient.get(requestUrl)
+  }
 }
 
 export default ApiService;
