@@ -21,8 +21,8 @@ public abstract class DomainEntity extends Result {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "deleted", nullable = false)
-    private boolean active = false;
+    @Column(name = "active", nullable = false)
+    private boolean active = true;
 
     @Column(name = "creation_date", nullable = false)
     private LocalDate creationDate = LocalDate.now();

@@ -16,8 +16,12 @@ public class ValidateFieldGender implements IStrategy {
         StringBuilder msg = new StringBuilder();
 
         Gender gender = client.getGender();
+        if(gender == null){
+            msg.append("O campo gênero é obrigatório");
+            return msg.toString();
+        }
 
-        if(gender == null || gender.equals(null)){
+        if(gender.equals("")){
             msg.append("O campo gênero é obrigatório");
         }
 

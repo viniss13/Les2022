@@ -16,7 +16,7 @@ function NavBar() {
     return (
         <div className="navbar navbar-expand-lg navbar-dark bg-secondary " >
             <div className="container ">
-                <a href="#/home" className="navbar-brand">HarmoniCenter</a>
+                <a href="/" className="navbar-brand">HarmoniCenter</a>
                 <button
                     className="navbar-toggler"
                     type="button"

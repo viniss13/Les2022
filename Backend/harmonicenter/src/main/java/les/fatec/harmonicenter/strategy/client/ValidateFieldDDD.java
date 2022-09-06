@@ -16,7 +16,12 @@ public class ValidateFieldDDD implements IStrategy {
 
         String areaCode = client.getAreaCode();
 
-        if(areaCode.isEmpty() || areaCode == null){
+        if(areaCode == null) {
+            msg.append("O campo DDD é obrigatório");
+            return msg.toString();
+        }
+
+        if(areaCode.isEmpty()){
             msg.append("O campo DDD é obrigatório");
         }
 

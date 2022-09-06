@@ -1,3 +1,4 @@
+import Footer from "./Component/Footer";
 import NavBar from "./Component/navbar";
 import RoutesService from "./service/api/RoutesService";
 
@@ -8,6 +9,8 @@ function App() {
       <NavBar />
 
       <RoutesService />
+
+      <Footer />
     </div>
   );
 }

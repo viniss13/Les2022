@@ -5,13 +5,13 @@ import ClientService from '../../service/Client/ClientService';
 import LocalStorageService from '../../service/config/LocalStorageService';
 import { errorMessage, successMessage } from '../toastr';
 
-const clientService = new ClientService()
+const clientService = new ClientService();
 
 const Login = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();//redirecionar
 
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const doLogin = () => {
     clientService.authenticate({
@@ -22,18 +22,21 @@ const Login = () => {
 
         LocalStorageService.removerItem("_logged_user");
         LocalStorageService.addItem('_logged_user', response.data); 
+
         console.log("RESPONSE", response.data, navigate);
 
-        successMessage('Login feito com sucesso!');
+        // successMessage('Login feito com sucesso!');
+        alert('Login feito com sucesso!')
         navigate('/user_home');
+
       })
       .catch(error => {
-        errorMessage(error);
+        alert(error);
       })
   };
 
-  const doRegister = async () => {
-
+  const doRegister = () => {
+    navigate('/signin');
   }
 
   return (
@@ -69,7 +72,7 @@ const Login = () => {
               </div>
               <div className="d-grid">
                 <button onClick={doLogin} className="btn btn-primary mt-3" >Entrar</button>
-                <button className="btn btn-dark mt-3">Cadastrar</button>
+                <button onClick={doRegister} className="btn btn-dark mt-3">Cadastrar</button>
               </div>
             </div>
           </div>

@@ -22,28 +22,15 @@ class ClientService extends ApiService {
     return this.post('/create', client);
   }
 
-  // deleteId(id) {      
+   delete(id) {      
 
-  //     return this.delete(`/deletar?id=${id}`);
+       return this.delete(`/delete?id=${id}`);
 
-  // }
+   }
 
-  // disableClientId(id){
-  //     console.log("to ino no inativar")
-  //     return this.put(`/inativar?id=${id}`);
-  // }
-
-  // getAllClients(){
-  //     console.log("BUSCANTO TODOS")
-  //     return this.get('/listaClientes')
-  // }
-
-  // getClientDetails(id){
-
-  //     return this.get(`/detalhesUsuario?id=${id}`);
-  //     //return this.get(`/consultarCliente?id=${id}`);
-  //     //return this.post(`/consultarCliente`, client)
-  // }
+   update(client){
+    return this.put('/update', client);
+   }
 
   getGender() {
     return [
@@ -62,7 +49,16 @@ class ClientService extends ApiService {
     ]
   }
 
-
+  alertMessage(data){
+    
+    let messages = [];
+          for( let i = 0; i < data.msg.length; i++){
+            messages.push(data.msg[i]);
+        }
+        messages = messages.join("\n");
+        alert(messages);
+      
+  }
 
 }
 

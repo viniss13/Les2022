@@ -16,13 +16,16 @@ public class ValidateBirthDate implements IStrategy {
         Client client = (Client) domainEntity;
         StringBuilder msg = new StringBuilder();
 
+        if( client.getBirthDate() == null){
+            msg.append("A data não pode ser nula");
+            return msg.toString();
+        }
+
         if(client.getBirthDate().isAfter(LocalDate.now())){
             msg.append(" A data deve ser menor ou igual a data atual. ");
         }
 
-        if( client.getBirthDate() == null){
-            msg.append("A data não pode ser nula");
-        }
+
 
         return msg.toString();
     }
