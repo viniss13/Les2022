@@ -22,9 +22,7 @@ public class Result {
     }
 
     public void addEntities(DomainEntity entity){
-      /*  if(entities == null){
-            entities = new ArrayList<DomainEntity>();
-        }*/
+
         entities.add(entity);
     }
 

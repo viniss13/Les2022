@@ -13,6 +13,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 
 @Getter
@@ -21,7 +22,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Table( name= "_client")
 @Entity
-public class Client extends DomainEntity{
+public class Client extends DomainEntity {
 
     @Column(name = "name")
     @NotNull
@@ -40,18 +41,24 @@ public class Client extends DomainEntity{
     private LocalDate birthDate;
 
     @Column(name = "PhoneType")
-    @Enumerated( EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     private PhoneType phoneType;
 
     @Column(name = "areaCode")//DDD
     private String areaCode;
 
-    @Column( name = "phoneNumber")
+    @Column(name = "phoneNumber")
     private String phoneNumber;
 
-    @Column( name = "gender")
-    @Enumerated( EnumType.STRING)
+    @Column(name = "gender")
+    @Enumerated(EnumType.STRING)
     private Gender gender;
+
+    @OneToMany(mappedBy = "client")
+    private List<Address> addressList;
+
+    @OneToMany(mappedBy = "client")
+    private List<Card> cardList;
 
     public Client(ClientSaveDTO clientDTO) {
         this.name = clientDTO.getName();
@@ -85,6 +92,9 @@ public class Client extends DomainEntity{
 
         this.email = clientDTO.getEmail();
         this.password = clientDTO.getPassword();
+    }
 
+    public Client(Long id) {
+        super(id);
     }
 }

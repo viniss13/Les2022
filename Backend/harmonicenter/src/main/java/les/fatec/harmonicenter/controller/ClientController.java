@@ -21,9 +21,6 @@ import java.util.List;
 public class ClientController {
 
     @Autowired
-    ClientRepository clientRepository;
-
-    @Autowired
     private Facade facade;
 
     @Autowired
@@ -44,7 +41,7 @@ public class ClientController {
 
         Client client = new Client(dto);
 
-        result = facade.save(client);
+        result = facade.create(client);
 
         return ResponseEntity.ok().body(result);
     }
@@ -76,6 +73,16 @@ public class ClientController {
         Client client = new Client();
         client.setGlobalSearch(true);
         result = facade.read(client);
+
+        return ResponseEntity.ok().body(result);
+    }
+
+    @GetMapping("/read_by_id")
+    public ResponseEntity<Result> readById(@Param("id") Long id){
+
+        Client client = new Client(id);
+
+        result = facade.readById(client);
 
         return ResponseEntity.ok().body(result);
     }

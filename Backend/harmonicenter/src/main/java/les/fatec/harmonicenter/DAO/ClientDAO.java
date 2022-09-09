@@ -20,7 +20,7 @@ public class ClientDAO implements IDAO {
     @Override
     public DomainEntity create(DomainEntity domainEntity) {
 
-        Client client = ( Client) domainEntity;
+        Client client = ( Client ) domainEntity;
         client.setCreationDate(LocalDate.now());
         clientRepository.save(client);
 
@@ -58,11 +58,6 @@ public class ClientDAO implements IDAO {
     }
 
     @Override
-    public List<DomainEntity> list(DomainEntity domainEntity) {
-        return null;
-    }
-
-    @Override
     public DomainEntity login(DomainEntity domainEntity) {
 
         Client client = ( Client ) domainEntity;
@@ -79,7 +74,13 @@ public class ClientDAO implements IDAO {
     }
 
     @Override
-    public List<DomainEntity> read(DomainEntity domainEntity) {
+    public DomainEntity readByID(long id) {
+
+         return clientRepository.findById(id).get();
+    }
+
+    @Override
+    public List<DomainEntity>read(DomainEntity domainEntity) {
 
         if( domainEntity.isGlobalSearch()){
 

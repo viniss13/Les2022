@@ -21,7 +21,7 @@ public class ValidateExistingUser implements IStrategy {
         long id = client.getId();
 
         if(!clientRepository.existsById(id)){
-                msg.append(" Usuário não existente. ");
+            msg.append(" Usuário não existente. ");
         }
 
         return msg.toString();

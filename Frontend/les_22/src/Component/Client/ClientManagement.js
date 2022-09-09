@@ -7,7 +7,8 @@ const ClientManagement = () => {
 
   const [data, setData] = React.useState('');
 
-  const getData = useEffect( () => {
+  //Executa ao carregar a página
+  useEffect( () => {
 
     const userData = LocalStorageService.obterItem("_logged_user");
 
