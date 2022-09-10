@@ -8,13 +8,11 @@ import SelectMenu from '../../SelectMenu';
 
 const addressService = new AddressService();
 
-const AddressUpdate = () => {
+const AddressCreate = () => {
     
   const navigate = useNavigate(); 
 
   const [data, setData] = React.useState(null);
-  const { id } = useParams();
-
   const [street, setStreet] = React.useState("");
   const [residencyType, setResidencyType] = React.useState("");
   const [observation, setObservation] = React.useState("");
@@ -27,42 +25,26 @@ const AddressUpdate = () => {
   const [state, setState] = React.useState("");
   const [addressType, setAddressType] = React.useState("");
 
+  const [ client, setClient] = React.useState();
+
   const addressTypeList = addressService.getAddresType();
 
-  let qtdMsg;
+  let qtdMsg;  
 
   const clientService = new ClientService();
-  
+
   React.useEffect( () =>{
 
     const userData = LocalStorageService.obterItem("_logged_user");
-
-    addressService.getById(id)
-      .then( response =>{
-        console.log( response.data )
-        setData(response.data);
-        setStreet(response.data.street);
-        setResidencyType(response.data.residencyType);
-        setObservation(response.data.observation);
-        setCity(response.data.city);
-        setNumber(response.data.number);
-        setDistrict(response.data.district);
-        setZipCode(response.data.zipCode);
-        setCountry(response.data.country);
-        setLogradouro(response.data.logradouro);
-        setCountry(response.data.country);
-        setState(response.data.state);
-        setAddressType(response.data.addressType);
-
-        // setClientId(response.data.client)
-
-      } )
+    let dataUser = userData.entities[0];
+    setClient( dataUser.id );
+    
   },[])
 
-    const updateAddress = () =>{
-
-    addressService.updateAddress({
-        id,
+    const createAddress = () =>{
+      
+    addressService.create({       
+        client,  
         street,
         residencyType,
         observation,
@@ -85,9 +67,9 @@ const AddressUpdate = () => {
                 
                 console.log(qtdMsg);
     
-                console.log("Editado");
+                console.log("Criado");
                 // successMessage('Cadastro realizado com sucesso!');
-                alert('Atualização realizada com sucesso!');
+                alert('Criação realizada com sucesso!');
     
     
                 navigate('/client_adresses');
@@ -249,7 +231,7 @@ const AddressUpdate = () => {
                                 onChange={(e) => setObservation(e.target.value)}
                                 />
                         </div>
-                        <button onClick={updateAddress} type="button" className="btn btn-primary">Salvar</button>
+                        <button onClick={createAddress} type="button" className="btn btn-primary">Salvar</button>
 
                     </form>
                 </div>
@@ -261,4 +243,4 @@ const AddressUpdate = () => {
   )
 }
 
-export default AddressUpdate
+export default AddressCreate

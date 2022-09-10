@@ -62,9 +62,9 @@ public class ValidateAddressFields implements IStrategy {
 
         if(state.isEmpty() || state.isBlank()) listMsg.add("Estado é obrigatório");
 
-        String existingClientMessage = veClientID.process(address.getClient());
+        //String existingClientMessage = veClientID.process(address.getClient());
 
-        if(!existingClientMessage.isEmpty()) listMsg.add(existingClientMessage);
+        //if(!existingClientMessage.isEmpty()) listMsg.add(existingClientMessage);
 
         if(!listMsg.isEmpty()) msg = String.join("\n", listMsg);
 

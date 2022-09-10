@@ -48,9 +48,9 @@ public class ValidateCardFields implements IStrategy {
 
         if(flag.isEmpty() || flag.isBlank() || flag.equals(null)) listMsg.add("Bandeira obrigatória");
 
-        String existingClientMessage = veClientID.process(card.getClient());
+       // String existingClientMessage = veClientID.process(card.getClient());
 
-        if(!existingClientMessage.isEmpty()) listMsg.add(existingClientMessage);
+       // if(!existingClientMessage.isEmpty()) listMsg.add(existingClientMessage);
 
         if(!listMsg.isEmpty()) msg = String.join(" \n ", listMsg);
 

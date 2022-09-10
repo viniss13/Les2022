@@ -10,6 +10,7 @@ import Home from '../../Component/Client/Home';
 import Cards from '../../Component/Client/Card/Cards';
 import Address from '../../Component/Client/Address/Address';
 import AddressUpdate from '../../Component/Client/Address/AddressUpdate';
+import AddressCreate from '../../Component/Client/Address/AddressCreate';
 
 
 function RoutesService() {
@@ -30,6 +31,8 @@ function RoutesService() {
         <Route path="/client_update" element={<ClientUpdate />} />
 
         <Route path="/client_cards" element={<Cards />} />
+
+        <Route path="/create_address" element={<AddressCreate />} />
 
         <Route path="/client_adresses" element={<Address />} />
 

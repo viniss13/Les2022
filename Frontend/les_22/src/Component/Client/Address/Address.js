@@ -39,9 +39,10 @@ const Address = () => {
   return (
     <div className="card p-5 d-flex flex-row justify-content-center flex-wrap">
       <div className="container">
-        <button className="btn btn-danger rainbow-bg mx-2">
-          Cadastrar
-        </button>
+      <Link 
+        className="btn btn-danger rainbow-bg mx-2" to={"/create_address"} >
+              Cadastrar
+      </Link>
       </div>
       {adresses?.length === 0 && <h1>Sem Endereços</h1>}
       {adresses?.map((address) => (

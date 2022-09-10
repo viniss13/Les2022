@@ -150,6 +150,7 @@ public abstract class AbstractFacade {
 
         List<IStrategy> createAddress = new ArrayList<>();
         createAddress.add(validateAddressFields);
+        createAddress.add(verifyExistingClientID);
 
         List<IStrategy> updateAddress = new ArrayList<>();
         updateAddress.add(validateAddressFields);
@@ -178,6 +179,7 @@ public abstract class AbstractFacade {
 
         List<IStrategy> createCard = new ArrayList<>();
         createCard.add(validateCardFields);
+        createCard.add(verifyExistingClientID);
 
         List<IStrategy> readCard = new ArrayList<>();
         List<IStrategy> deleteCard = new ArrayList<>();
