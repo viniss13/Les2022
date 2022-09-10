@@ -69,7 +69,8 @@ public class AddressDAO implements IDAO{
     @Override
     public List<DomainEntity> read(DomainEntity domainEntity) {
 
-        List<Address> result = addressRepository.findAll();
+        Long client_id = ((Address) domainEntity).getClient().getId();
+        List<Address> result = addressRepository.findAllAddressByClientId(client_id);
         List<DomainEntity> entities = new ArrayList<>();
 
         for(Address address : result ){

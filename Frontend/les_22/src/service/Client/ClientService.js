@@ -30,7 +30,7 @@ class ClientService extends ApiService {
 
    update(client){
     return this.put('/update', client);
-   }
+   }  
 
   getGender() {
     return [

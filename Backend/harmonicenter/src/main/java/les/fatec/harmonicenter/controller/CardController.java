@@ -48,10 +48,9 @@ public class CardController {
     }
 
     @GetMapping("/read")
-    public ResponseEntity<Result> list(){
+    public ResponseEntity<Result> readAll(@Param("client_id") Long client_id){
 
-        Card card = new Card();
-        card.setGlobalSearch(true);
+        Card card = new Card(new Client(client_id));
         result = facade.read(card);
 
         return ResponseEntity.ok().body(result);

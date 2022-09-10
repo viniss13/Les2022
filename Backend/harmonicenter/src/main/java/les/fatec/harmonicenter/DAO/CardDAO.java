@@ -53,7 +53,9 @@ public class CardDAO implements IDAO{
     @Override
     public List<DomainEntity> read(DomainEntity domainEntity) {
 
-        List<Card> result = cardRepository.findAll();
+        Long client_id = ((Card) domainEntity).getClient().getId();
+
+        List<Card> result = cardRepository.findAllCardByClientId(client_id);
         List<DomainEntity> entities = new ArrayList<>();
 
         for(Card card : result ){

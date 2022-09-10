@@ -8,7 +8,7 @@ const ClientManagement = () => {
   const [data, setData] = React.useState('');
 
   //Executa ao carregar a página
-  useEffect( () => {
+  useEffect(() => {
 
     const userData = LocalStorageService.obterItem("_logged_user");
 
@@ -32,12 +32,15 @@ const ClientManagement = () => {
 
               <div className="card border-0 col-6 my-3 px-5 py-5 " style={{ width: '600px' }}>
 
-                <a className="btn btn-outline-dark list-group-item mx-2 my-2 border border-dark" href="/client_profile">Minha conta</a>
-                {/* <a className="btn btn-outline-dark list-group-item mx-2 my-2 border border-dark" href="/listaEndereco">Endereços</a>
-                <a className="btn btn-outline-dark list-group-item mx-2 my-2 border border-dark" href="/cartoes">Cartões</a> */}
+                <a className="btn btn-outline-dark list-group-item mx-2 my-2 border border-dark" href="/client_profile">Minha Conta</a>
+
+                <a className="btn btn-outline-dark list-group-item mx-2 my-2 border border-dark" href="/client_cards">Meus Cartões</a>
+
+                <a className="btn btn-outline-dark list-group-item mx-2 my-2 border border-dark" href="/client_adresses">Meus Endereços</a>
+
 
               </div>
-            
+
             </div>
           </div>
         </form>

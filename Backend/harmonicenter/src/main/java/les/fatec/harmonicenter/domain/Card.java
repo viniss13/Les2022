@@ -43,6 +43,9 @@ public class Card extends DomainEntity {
     @Column(name = "flag")
     private String flag;// bandeira
 
+    @Column(name = "alias")
+    private String alias;
+
     public Card(CardDTO cardDTO) {
 
         Client client = new Client();
@@ -57,9 +60,14 @@ public class Card extends DomainEntity {
         this.holderCpf = cardDTO.getHolderCpf();
         this.preferencial = cardDTO.getPreferencial();
         this.flag = cardDTO.getFlag();
+        this.alias = cardDTO.getAlias();
     }
 
     public Card(Long id) {
         super(id);
+    }
+
+    public Card(Client client) {
+        this.client = client;
     }
 }

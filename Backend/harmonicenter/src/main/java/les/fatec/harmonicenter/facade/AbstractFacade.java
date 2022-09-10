@@ -184,7 +184,7 @@ public abstract class AbstractFacade {
         deleteCard.add(verifyExistingCardID);
 
         List<IStrategy> readCardById = new ArrayList<>();
-        deleteCard.add(verifyExistingCardID);
+        readCardById.add(verifyExistingCardID);
 
         Map<String, List<IStrategy>> cardRules = new HashMap<>();
         cardRules.put(CREATE, createCard);

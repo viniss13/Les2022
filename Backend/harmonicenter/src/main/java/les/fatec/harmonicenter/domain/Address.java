@@ -101,4 +101,8 @@ public class Address extends DomainEntity {
     public Address(Long id) {
         super(id);
     }
+
+    public Address(Client client) {
+        this.client = client;
+    }
 }

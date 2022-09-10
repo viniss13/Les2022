@@ -1,28 +1,16 @@
 
-import React, { useEffect, useState } from 'react'
-import { Navigate, useNavigate } from 'react-router-dom';
-import ClientService from '../../service/Client/ClientService';
+import React, { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom';
 import LocalStorageService from '../../service/config/LocalStorageService';
-
-const clientService = new ClientService();
 
 const ClientProfile = () => {
 
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState('');
-  const [ password, setPassword] = useState('');
-  const [ name, setName] = useState('');
-  const [ gender, setGender] = useState('');
-  const [ birthDate, setBirthDate] = useState('');  
-  const [type, setType] = useState('');
-  const [areaCode, setAreaCode] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [cpf, setCpf] = useState('');
 
   const [data, setData] = React.useState('');
 
-  const getData = useEffect( () => {
+  useEffect( () => {
     
     const userData = LocalStorageService.obterItem("_logged_user");
 
@@ -31,7 +19,6 @@ const ClientProfile = () => {
     console.log("USERDATA", userData.entities[0]);
 
   }, [])
-
   
   const deleteAccount = () => {
 

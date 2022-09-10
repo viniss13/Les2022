@@ -55,10 +55,9 @@ public class AddressController {
     }
 
     @GetMapping("/read")
-    public ResponseEntity<Result> list(){
+    public ResponseEntity<Result> readAll(@Param("client_id") Long client_id){
 
-        List<Address> addressList = new ArrayList<>();
-        Address address = new Address();
+        Address address = new Address(new Client(client_id));
         address.setGlobalSearch(true);
         result = facade.read(address);
 

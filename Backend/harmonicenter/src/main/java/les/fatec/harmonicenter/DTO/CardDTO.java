@@ -20,6 +20,8 @@ public class CardDTO {
     private String flag;
     private Long client;
 
+    private String alias;
+
     public CardDTO(Card card){
 
         this.number = card.getNumber();
