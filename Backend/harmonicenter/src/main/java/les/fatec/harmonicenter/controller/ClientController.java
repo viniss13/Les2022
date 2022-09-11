@@ -34,8 +34,11 @@ public class ClientController {
         Client client = new Client(dto);
         result = facade.login(client);
 
-        return ResponseEntity.ok().body(result);
-    }
+        if( result.getMsg().isEmpty()){
+            return ResponseEntity.status(HttpStatus.OK).body(result);
+        }else{
+            return ResponseEntity.ok().body(result);
+        }    }
 
     @PostMapping("/create")
     public ResponseEntity save(@RequestBody ClientSaveDTO dto){
@@ -44,7 +47,11 @@ public class ClientController {
 
         result = facade.create(client);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(result);
+        if( result.getMsg().isEmpty()){
+            return ResponseEntity.status(HttpStatus.CREATED).body(result);
+        }else{
+            return ResponseEntity.badRequest().body(result);
+        }
     }
 
     @PutMapping("/update")

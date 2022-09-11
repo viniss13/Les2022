@@ -34,8 +34,11 @@ public class CardController {
         Card card = new Card(dto);
 
         result = facade.create(card);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(result);
+        if( result.getMsg().isEmpty()){
+            return ResponseEntity.status(HttpStatus.CREATED).body(result);
+        }else{
+            return ResponseEntity.badRequest().body(result);
+        }
     }
 
     @DeleteMapping("/delete")

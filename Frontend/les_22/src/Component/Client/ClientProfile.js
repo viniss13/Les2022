@@ -3,10 +3,13 @@ import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import LocalStorageService from '../../service/config/LocalStorageService';
 
+
+import { ToastContainer, toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const ClientProfile = () => {
 
   const navigate = useNavigate();
-
 
   const [data, setData] = React.useState('');
 
@@ -23,7 +26,6 @@ const ClientProfile = () => {
   const deleteAccount = () => {
 
     LocalStorageService.removerItem("_logged_user");
-    alert("Inativado com sucesso!")
     navigate('/');
   }
 
@@ -32,6 +34,7 @@ const ClientProfile = () => {
     <section className=" mb-5 my-5">
 
         <form className="container mt-5 mb-5" >
+        <ToastContainer />
 
             <div className="row ">
               <div className="col-12">

@@ -5,6 +5,9 @@ import ClientService from '../../service/Client/ClientService';
 import LocalStorageService from '../../service/config/LocalStorageService';
 import { errorMessage, successMessage } from '../toastr';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const clientService = new ClientService();
 
 const Login = () => {
@@ -21,17 +24,25 @@ const Login = () => {
       .then(response => {
 
         LocalStorageService.removerItem("_logged_user");
-        LocalStorageService.addItem('_logged_user', response.data); 
+        LocalStorageService.addItem('_logged_user', response.data);
 
-        console.log("RESPONSE", response.data, navigate);
-
-        // successMessage('Login feito com sucesso!');
-        alert('Login feito com sucesso!')
-        navigate('/user_home');
+        if (response.data.msg.length > 0) {
+          let messages = response.data.msg;
+          console.log("messages", messages);
+          for (let i = 0; i < messages.length; i++) {
+            let msgs = messages[i].split("\n");
+            for (let message in msgs) {
+              toast.error(msgs[message]);
+            }
+          }
+        } else {
+          navigate('/user_home');
+          toast('Login feito com sucesso!');
+        }
 
       })
       .catch(error => {
-        alert(error);
+        toast.error(clientService.alertMessage(error.response.data));
       })
   };
 
@@ -41,6 +52,9 @@ const Login = () => {
 
   return (
     <div className="container text-white rounded-circle rounded-5">
+
+      <ToastContainer />
+
       <div className="row">
         <div className="col-sm-9 col-md-7 col-lg-5 mx-auto ">
           <div className="card border-0 shadow rounded-3 my-5">

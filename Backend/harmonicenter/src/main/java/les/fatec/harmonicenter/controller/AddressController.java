@@ -33,7 +33,11 @@ public class AddressController {
 
         result = facade.create(address);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(result);
+        if( result.getMsg().isEmpty()){
+            return ResponseEntity.status(HttpStatus.CREATED).body(result);
+        }else{
+            return ResponseEntity.badRequest().body(result);
+        }
     }
 
     @PutMapping("/update")

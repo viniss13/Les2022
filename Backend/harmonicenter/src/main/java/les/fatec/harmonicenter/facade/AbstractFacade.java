@@ -98,6 +98,9 @@ public abstract class AbstractFacade {
     @Autowired
     ValidateCardFields validateCardFields;
 
+    @Autowired
+    ValidateAuthentication validateAuthentication;
+
     protected void initializeMaps() {
         daos.put(Client.class.getName(), clientDAO);
         daos.put(Address.class.getName(), addressDAO);
@@ -116,8 +119,6 @@ public abstract class AbstractFacade {
 
         /// ************ EDITAR ***************
         List<IStrategy> editClient = new ArrayList<>();
-
-        editClient.add(verifyExistingAddressID);
         editClient.add(validateFieldEmail);
         editClient.add(validateFieldBirthDate);
         editClient.add(validateFieldDDD);
@@ -136,12 +137,16 @@ public abstract class AbstractFacade {
         List<IStrategy> deleteClient = new ArrayList<>();
         deleteClient.add(verifyExistingClientID);
 
+        /// ************ Login ***************
+        List<IStrategy> loginClient = new ArrayList<>();
+        loginClient.add(validateAuthentication);
+
         Map<String, List<IStrategy>> clientRules = new HashMap<>();
         clientRules.put(CREATE, createClient);
         clientRules.put(UPDATE, editClient);
         clientRules.put(READ, readClient);
         clientRules.put(DELETE, deleteClient);
-        clientRules.put(LOGIN, new ArrayList<>());
+        clientRules.put(LOGIN, loginClient);
         clientRules.put(READ_BY_ID, readClientByID);
 
         this.rules.put(Client.class.getName(), clientRules);

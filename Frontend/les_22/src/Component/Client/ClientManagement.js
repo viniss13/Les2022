@@ -3,12 +3,18 @@ import React, { useEffect, useMemo } from "react";
 import LocalStorageService from "../../service/config/LocalStorageService";
 // import { withRouter } from "react-router-dom/cjs/react-router-dom.min";
 
+
+import { ToastContainer, toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const ClientManagement = () => {
 
   const [data, setData] = React.useState('');
 
   //Executa ao carregar a página
   useEffect(() => {
+
+   // toast.success('Login feito com sucesso!');    
 
     const userData = LocalStorageService.obterItem("_logged_user");
 
@@ -20,6 +26,8 @@ const ClientManagement = () => {
 
   return (
     <>
+        <ToastContainer />
+
       <section className=" mb-5 my-5">
         <form className="container mt-5 mb-5" fragment="seusDados">
 

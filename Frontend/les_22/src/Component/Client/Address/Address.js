@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
 import AddressService from '../../../service/Address/AddressService';
 import LocalStorageService from '../../../service/config/LocalStorageService';
+import { ToastContainer, toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const addressService = new AddressService();
 
@@ -30,15 +31,18 @@ const Address = () => {
     addressService.deleteAddress(id)
       .then( response => {
         console.info('deletou address', id);
+        toast.success("Endereço excluído com sucesso!")
         getAllAddress();
       }).catch(error =>{
-        alert(error)
       })
   }
 
   return (
+    <>
     <div className="card p-5 d-flex flex-row justify-content-center flex-wrap">
       <div className="container">
+      <ToastContainer />
+
       <Link 
         className="btn btn-danger rainbow-bg mx-2" to={"/create_address"} >
               Cadastrar
@@ -83,6 +87,10 @@ const Address = () => {
       ))}
 
     </div>
+      <a href="/user_home" className="btn btn-outline-secondary mb-2 " >Voltar</a>
+
+    </>
+    
   )
 }
 

@@ -36,7 +36,7 @@ public class ValidateCardFields implements IStrategy {
 
         if(number.isEmpty() || number.isBlank() || number.equals(null)) listMsg.add("Número obrigatório");
 
-        if(holder.isEmpty() || holder.isBlank() || holder.equals(null)) listMsg.add("Proprietário obrigatório");
+        if(holder.isEmpty() || holder.isBlank() || holder.equals(null)) listMsg.add("Titular do cartão obrigatório");
 
         if(expirationDateMonth.isEmpty() || expirationDateMonth.isBlank() || expirationDateMonth.equals(null)) listMsg.add("Mês de vencimento obrigatório");
 

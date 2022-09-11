@@ -49,15 +49,15 @@ class ClientService extends ApiService {
     ]
   }
 
-  alertMessage(data){
-    
+
+  alertMessage(data){   
+
     let messages = [];
           for( let i = 0; i < data.msg.length; i++){
             messages.push(data.msg[i]);
         }
         messages = messages.join("\n");
-        alert(messages);
-      
+        alert(messages);      
   }
 
 }
