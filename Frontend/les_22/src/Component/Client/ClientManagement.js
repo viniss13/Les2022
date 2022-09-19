@@ -1,5 +1,5 @@
 
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect } from "react";
 import LocalStorageService from "../../service/config/LocalStorageService";
 // import { withRouter } from "react-router-dom/cjs/react-router-dom.min";
 
@@ -45,6 +45,8 @@ const ClientManagement = () => {
                 <a className="btn btn-outline-dark list-group-item mx-2 my-2 border border-dark" href="/client_cards">Meus Cartões</a>
 
                 <a className="btn btn-outline-dark list-group-item mx-2 my-2 border border-dark" href="/client_adresses">Meus Endereços</a>
+
+                <a className="btn btn-outline-dark list-group-item mx-2 my-2 border border-dark" href="/products">Produtos</a>
 
 
               </div>

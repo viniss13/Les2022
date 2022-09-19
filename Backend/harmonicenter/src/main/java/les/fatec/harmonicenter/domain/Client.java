@@ -60,6 +60,12 @@ public class Client extends DomainEntity {
     @OneToMany(mappedBy = "client")
     private List<Card> cardList;
 
+    @OneToMany(mappedBy = "client")
+    private List<Order> orders;
+
+    @OneToMany( mappedBy = "client")
+    private List<Cart> cart;
+
     public Client(ClientSaveDTO clientDTO) {
         this.name = clientDTO.getName();
         this.cpf = clientDTO.getCpf();

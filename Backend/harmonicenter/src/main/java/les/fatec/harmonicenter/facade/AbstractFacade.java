@@ -1,12 +1,7 @@
 package les.fatec.harmonicenter.facade;
 
-import les.fatec.harmonicenter.DAO.AddressDAO;
-import les.fatec.harmonicenter.DAO.CardDAO;
-import les.fatec.harmonicenter.DAO.ClientDAO;
-import les.fatec.harmonicenter.DAO.IDAO;
-import les.fatec.harmonicenter.domain.Address;
-import les.fatec.harmonicenter.domain.Card;
-import les.fatec.harmonicenter.domain.Client;
+import les.fatec.harmonicenter.DAO.*;
+import les.fatec.harmonicenter.domain.*;
 import les.fatec.harmonicenter.strategy.Address.ValidateAddressFields;
 import les.fatec.harmonicenter.strategy.Address.VerifyExistingAddressID;
 import les.fatec.harmonicenter.strategy.Card.ValidateCardFields;
@@ -48,6 +43,12 @@ public abstract class AbstractFacade {
 
     @Autowired
     CardDAO cardDAO;
+
+    @Autowired
+    CartDAO cartDAO;
+
+    @Autowired
+    ProductDAO productDAO;
 
     // ***************** Strategys ********************
 
@@ -105,6 +106,8 @@ public abstract class AbstractFacade {
         daos.put(Client.class.getName(), clientDAO);
         daos.put(Address.class.getName(), addressDAO);
         daos.put(Card.class.getName(), cardDAO);
+        daos.put(Product.class.getName(), productDAO);
+        daos.put(Cart.class.getName(), cartDAO);
 
         //***************************** CLIENT *****************************
         List<IStrategy> createClient = new ArrayList<>();
@@ -201,6 +204,41 @@ public abstract class AbstractFacade {
 
         this.rules.put(Card.class.getName(), cardRules);
 
+
+        /// ************ Product ********************
+
+        List<IStrategy> createProduct = new ArrayList<>();
+        List<IStrategy> readProduct = new ArrayList<>();
+        List<IStrategy> updateProduct = new ArrayList<>();
+        List<IStrategy> deleteProduct = new ArrayList<>();
+        List<IStrategy> readByIDProduct = new ArrayList<>();
+
+        Map<String, List<IStrategy>> productRules = new HashMap<>();
+        productRules.put(CREATE, createProduct);
+        productRules.put(READ, readProduct);
+        productRules.put(UPDATE, updateProduct);
+        productRules.put(DELETE, deleteProduct);
+        productRules.put(READ_BY_ID, readByIDProduct);
+
+        this.rules.put(Product.class.getName(), productRules);
+
+
+        /// ************ Product ********************
+
+        List<IStrategy> createCart = new ArrayList<>();
+        List<IStrategy> readCart = new ArrayList<>();
+        List<IStrategy> updateCart = new ArrayList<>();
+        List<IStrategy> deleteCart = new ArrayList<>();
+        List<IStrategy> readByIDCart = new ArrayList<>();
+
+        Map<String, List<IStrategy>> cartRules = new HashMap<>();
+        cartRules.put(CREATE, createCart);
+        cartRules.put(READ, readCart);
+        cartRules.put(UPDATE, updateCart);
+        cartRules.put(DELETE, deleteCart);
+        cartRules.put(READ_BY_ID, readByIDCart);
+
+        this.rules.put(Cart.class.getName(), cartRules);
     }
 
 }

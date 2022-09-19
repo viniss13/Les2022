@@ -9,7 +9,7 @@ class CardService extends ApiService {
 
     getAllcards(id) {
         return this.get(`/read?client_id=${id}`);
-    }
+    } 
 
     deleteCard(id) {
         return this.delete(`/delete?id=${id}`);

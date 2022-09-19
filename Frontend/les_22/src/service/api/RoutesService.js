@@ -12,6 +12,9 @@ import Address from '../../Component/Client/Address/Address';
 import AddressUpdate from '../../Component/Client/Address/AddressUpdate';
 import AddressCreate from '../../Component/Client/Address/AddressCreate';
 import CardCreate from '../../Component/Client/Card/CardCreate';
+import Products from '../../Component/Product/Products';
+import ProductDetails from '../../Component/Product/ProductDetails';
+import Cart from '../../Component/Client/Cart/Cart';
 
 
 function RoutesService() {
@@ -40,6 +43,12 @@ function RoutesService() {
         <Route path="/client_adresses" element={<Address />} />
 
         <Route path="/client_adresses/update/:id" element={<AddressUpdate />} />
+
+        <Route path="/products" element={<Products />} />
+
+        <Route path="/products/details/:id" element={<ProductDetails />} />
+
+        <Route path="/cart" element={<Cart />} />
 
       </Routes>
     </BrowserRouter>
