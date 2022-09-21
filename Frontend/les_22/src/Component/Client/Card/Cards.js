@@ -19,9 +19,7 @@ const Cards = () => {
 
     cardService.getAllcards(id)
       .then(response => {
-        console.log('RESPONSE', response)
         setCards(response.data.entities);
-        console.log('CARDS', cards)
 
       }).catch(error => {
         console.error("erro recuperando cartões do usuário", id, error)

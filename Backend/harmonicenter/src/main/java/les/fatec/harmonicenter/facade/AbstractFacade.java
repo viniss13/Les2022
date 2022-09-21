@@ -108,6 +108,7 @@ public abstract class AbstractFacade {
         daos.put(Card.class.getName(), cardDAO);
         daos.put(Product.class.getName(), productDAO);
         daos.put(Cart.class.getName(), cartDAO);
+        daos.put(Item.class.getName(), cartDAO);
 
         //***************************** CLIENT *****************************
         List<IStrategy> createClient = new ArrayList<>();
@@ -223,7 +224,7 @@ public abstract class AbstractFacade {
         this.rules.put(Product.class.getName(), productRules);
 
 
-        /// ************ Product ********************
+        /// ************ Cart ********************
 
         List<IStrategy> createCart = new ArrayList<>();
         List<IStrategy> readCart = new ArrayList<>();
@@ -239,6 +240,23 @@ public abstract class AbstractFacade {
         cartRules.put(READ_BY_ID, readByIDCart);
 
         this.rules.put(Cart.class.getName(), cartRules);
+
+        /// ************ Item ********************
+
+        List<IStrategy> createItem = new ArrayList<>();
+        List<IStrategy> readItem = new ArrayList<>();
+        List<IStrategy> updateItem = new ArrayList<>();
+        List<IStrategy> deleteItem = new ArrayList<>();
+        List<IStrategy> readByIDItem = new ArrayList<>();
+
+        Map<String, List<IStrategy>> itemRules = new HashMap<>();
+        itemRules.put(CREATE, createItem);
+        itemRules.put(READ, readItem);
+        itemRules.put(UPDATE, updateItem);
+        itemRules.put(DELETE, deleteItem);
+        itemRules.put(READ_BY_ID, readByIDItem);
+
+        this.rules.put(Item.class.getName(), itemRules);
     }
 
 }

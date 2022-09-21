@@ -40,4 +40,8 @@ public class Item extends DomainEntity {
         this.quantity = quantity;
         this.product = new Product(product_id);
     }
+
+    public Item(Long item_id) {
+        super(item_id);
+    }
 }

@@ -3,10 +3,7 @@ package les.fatec.harmonicenter.controller;
 import les.fatec.harmonicenter.DTO.CartDTO;
 import les.fatec.harmonicenter.DTO.ItemDTO;
 import les.fatec.harmonicenter.DTO.ProductDTO;
-import les.fatec.harmonicenter.domain.Cart;
-import les.fatec.harmonicenter.domain.Item;
-import les.fatec.harmonicenter.domain.Product;
-import les.fatec.harmonicenter.domain.Result;
+import les.fatec.harmonicenter.domain.*;
 import les.fatec.harmonicenter.facade.Facade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -50,31 +47,22 @@ public class CartController {
     }
 
     @GetMapping("/read")
-    public ResponseEntity read(){
+    public ResponseEntity read(@Param("client_id") Long client_id){
 
-        Product product = new Product();
+        Client client = new Client(client_id);
+        Cart cart = new Cart(client);
 
-        result = facade.read(product);
-
-        return ResponseEntity.ok().body(result);
-    }
-
-    @GetMapping("/read_by_id")
-    public ResponseEntity<Result> readById(@Param("id") Long id){
-
-        Product product = new Product(id);
-
-        result = facade.readById(product);
+        result = facade.read(cart);
 
         return ResponseEntity.ok().body(result);
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<Result> delete(@Param("id") Long id){
+    @DeleteMapping("/delete_item")
+    public ResponseEntity<Result> deleteItem(@Param("item_id") Long item_id){
 
-        Product product = new Product(id);
+        Item item = new Item(item_id);
 
-        result = facade.delete(product);
+        result = facade.delete(item);
 
         return ResponseEntity.ok().body(result);
     }

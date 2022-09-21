@@ -3,12 +3,12 @@ import { useParams } from 'react-router-dom';
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import CartService from '../../service/Cart/CartService';
 import LocalStorageService from '../../service/config/LocalStorageService';
 import ProductService from '../../service/Product/ProductService';
 
 const productService = new ProductService();
-
-
+const cartService = new CartService();
 
 const ProductDetails = () => {
 
@@ -67,13 +67,42 @@ const ProductDetails = () => {
       return;
     }
 
-    let item = {};
-    item.id = params.id;
-    item.quantity = quantity;
+    const client_id = LocalStorageService.obterItem("_logged_user").entities[0].id;
+    const product_id = parseInt(params.id);
 
-    //LocalStorageService.removerItem(item);
-    LocalStorageService.addToCart(item);
-    toast.success('Adicionado com sucesso!');
+    let item = {};
+    item.product_id = product_id;
+    item.quantity = quantity;    
+    item.client_id = client_id;
+
+    let qtdMsg = 0;
+
+    cartService.update(item)
+    .then(response => {
+      
+      
+      qtdMsg = response.data.msg.length;
+
+        console.log("QUANTIDADES STRATEGY", qtdMsg);
+
+        if (qtdMsg === 0) {
+          toast.success('Adicionado com sucesso!');
+        } else {
+          let messages = response.data.msg;
+          console.log("messages", messages);
+          for (let i = 0; i < messages.length; i++) {
+            let msgs = messages[i].split("\n");
+            for (let message in msgs) {
+              toast.error(msgs[message]);
+            }
+          }
+        }
+
+    }).catch( error =>{
+
+      toast.error('Erro ao adicionar');
+    })
+   
   }
 
   return (

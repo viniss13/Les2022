@@ -42,11 +42,7 @@ public class CartDAO implements IDAO{
 
         Long client_id = cart.getClient().getId();
 
-        Cart currentCart = cartRepository.findByClientIdAndCurrentCartTrue(client_id);
-        if(currentCart == null){
-            this.create(cart);
-            currentCart = cartRepository.findByClientIdAndCurrentCartTrue(client_id);
-        }
+        Cart currentCart = getCart(cart);
 
         item.setCart(currentCart);
 
@@ -63,12 +59,27 @@ public class CartDAO implements IDAO{
            itemRepository.save(currentItem);
         }
 
-
     }
+
+    private Cart getCart(Cart cart){
+
+        Long client_id = cart.getClient().getId();
+
+        Cart currentCart = cartRepository.findByClientIdAndCurrentCartTrue(client_id);
+        
+        if(currentCart == null){
+            this.create(cart);
+            currentCart = cartRepository.findByClientIdAndCurrentCartTrue(client_id);
+        }
+
+        return currentCart;
+    }
+
 
     @Override
     public void delete(Long id) {
 
+        itemRepository.deleteById(id);
     }
 
     @Override
@@ -85,7 +96,21 @@ public class CartDAO implements IDAO{
     @Override
     public List<DomainEntity> read(DomainEntity domainEntity) {
 
-        return null;
+        Cart cart = (Cart) domainEntity;
+
+        Long client_id = cart.getClient().getId();
+
+        Cart currentCart = getCart(cart);
+
+        List<Item> items = itemRepository.findAllByCart(currentCart);
+
+        List<DomainEntity> entities = new ArrayList<>();
+
+        for(Item item : items ){
+            entities.add(item);
+        }
+
+        return entities;
 
     }
 }

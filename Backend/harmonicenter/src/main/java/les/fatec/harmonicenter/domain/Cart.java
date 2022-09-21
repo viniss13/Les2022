@@ -37,4 +37,12 @@ public class Cart extends DomainEntity {
         items.add(new Item(dto.getQuantity(), dto.getProduct_id()));
     }
 
+    public Cart(Item item){
+        this.items = new ArrayList<>();
+        items.add(item);
+    }
+
+    public Cart(Client client) {
+        this.client = client;
+    }
 }

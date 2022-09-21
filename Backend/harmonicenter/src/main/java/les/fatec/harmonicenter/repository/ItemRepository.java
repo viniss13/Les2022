@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Long> {
 
@@ -19,4 +21,6 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
             "   PRODUCT = :product_id AND CART = :cart_id ")
     Item findByCartAndProduct(@Param("cart_id") Long cart_id,
                               @Param("product_id") Long product_id);
+
+    List<Item> findAllByCart(Cart cart);
 }
