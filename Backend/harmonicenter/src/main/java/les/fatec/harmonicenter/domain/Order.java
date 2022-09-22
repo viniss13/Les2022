@@ -34,5 +34,31 @@ public class Order extends DomainEntity {
     @JoinColumn(name = "cart_id")
     private Cart cart;
 
-    private OrderStatus status;
+    @Column
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status = OrderStatus.DRAFT;
+
+
+    public Order(Card card, Client client) {
+        this.card = card;
+        this.client = client;
+    }
+
+    public Order(Address address, Client client) {
+        this.address = address;
+        this.client = client;
+    }
+
+    public Order(Client client){
+        this.client = client;
+    }
+
+    public Order(Long order_id) {
+        super(order_id);
+    }
+
+    public Order(Long id, OrderStatus status) {
+        super(id);
+        this.status = status;
+    }
 }

@@ -7,6 +7,7 @@ import les.fatec.harmonicenter.domain.Enum.AddressType;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -54,6 +55,9 @@ public class Address extends DomainEntity {
     @Column(name = "addressType", nullable = false)
     @Enumerated(EnumType.STRING)
     private AddressType addressType;
+//
+//    @OneToMany(mappedBy = "address")
+//    private List<Order> addressOrder;
 
     public Address(AddressDTO addressDTO) {
 
@@ -62,7 +66,6 @@ public class Address extends DomainEntity {
         this.client = client;
 //
 //        this.setId(addressDTO.getId());
-        this.client = client;
         this.street = addressDTO.getStreet();
         this.residencyType = addressDTO.getResidencyType();
         this.observation = addressDTO.getObservation();

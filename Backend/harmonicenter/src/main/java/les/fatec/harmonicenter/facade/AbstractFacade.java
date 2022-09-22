@@ -50,6 +50,9 @@ public abstract class AbstractFacade {
     @Autowired
     ProductDAO productDAO;
 
+    @Autowired
+    OrderDAO orderDAO;
+
     // ***************** Strategys ********************
 
     @Autowired
@@ -109,6 +112,7 @@ public abstract class AbstractFacade {
         daos.put(Product.class.getName(), productDAO);
         daos.put(Cart.class.getName(), cartDAO);
         daos.put(Item.class.getName(), cartDAO);
+        daos.put(Order.class.getName(), orderDAO);
 
         //***************************** CLIENT *****************************
         List<IStrategy> createClient = new ArrayList<>();
@@ -257,6 +261,23 @@ public abstract class AbstractFacade {
         itemRules.put(READ_BY_ID, readByIDItem);
 
         this.rules.put(Item.class.getName(), itemRules);
+
+        /// ************ Order ********************
+
+        List<IStrategy> createOrder = new ArrayList<>();
+        List<IStrategy> readOrder = new ArrayList<>();
+        List<IStrategy> updateOrder = new ArrayList<>();
+        List<IStrategy> deleteOrder = new ArrayList<>();
+        List<IStrategy> readByIDOrder = new ArrayList<>();
+
+        Map<String, List<IStrategy>> orderRules = new HashMap<>();
+        orderRules.put(CREATE, createOrder);
+        orderRules.put(READ, readOrder);
+        orderRules.put(UPDATE, updateOrder);
+        orderRules.put(DELETE, deleteOrder);
+        orderRules.put(READ_BY_ID, readByIDOrder);
+
+        this.rules.put(Order.class.getName(), orderRules);
     }
 
 }
