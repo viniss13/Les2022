@@ -38,6 +38,10 @@ public class Order extends DomainEntity {
     @Enumerated(EnumType.STRING)
     private OrderStatus status = OrderStatus.DRAFT;
 
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "coupon_id")
+    private Coupon coupon;
+
 
     public Order(Card card, Client client) {
         this.card = card;
@@ -60,5 +64,10 @@ public class Order extends DomainEntity {
     public Order(Long id, OrderStatus status) {
         super(id);
         this.status = status;
+    }
+
+    public Order(Coupon coupon, Client client) {
+        this.coupon = coupon;
+        this.client = client;
     }
 }

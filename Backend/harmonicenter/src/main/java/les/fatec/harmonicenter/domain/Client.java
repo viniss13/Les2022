@@ -13,6 +13,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -65,6 +66,9 @@ public class Client extends DomainEntity {
 
     @OneToMany( mappedBy = "client")
     private List<Cart> cart;
+
+//    @OneToMany(mappedBy = "client")
+//    private List<Coupon> coupons = new ArrayList<>();
 
     public Client(ClientSaveDTO clientDTO) {
         this.name = clientDTO.getName();

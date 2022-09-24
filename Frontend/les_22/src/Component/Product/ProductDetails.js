@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import CartService from '../../service/Cart/CartService';
 import LocalStorageService from '../../service/config/LocalStorageService';
 import ProductService from '../../service/Product/ProductService';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 
 const productService = new ProductService();
 const cartService = new CartService();
@@ -23,10 +24,12 @@ const ProductDetails = () => {
   const [brand, setBrand] = React.useState("");
 
   const [quantity, dispatch] = React.useReducer(reducer, 0);
+  const navigate = useNavigate();
 
   const params = useParams();
 
   console.log(params);
+
 
   function reducer(quantity, action) {
     console.log(action);
@@ -78,14 +81,14 @@ const ProductDetails = () => {
     let qtdMsg = 0;
 
     cartService.update(item)
-    .then(response => {
-      
+    .then(response => {      
       
       qtdMsg = response.data.msg.length;
 
         console.log("QUANTIDADES STRATEGY", qtdMsg);
 
         if (qtdMsg === 0) {
+          navigate("/products")
           toast.success('Adicionado com sucesso!');
         } else {
           let messages = response.data.msg;

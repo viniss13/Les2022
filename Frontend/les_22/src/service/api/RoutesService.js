@@ -14,7 +14,11 @@ import AddressCreate from '../../Component/Client/Address/AddressCreate';
 import CardCreate from '../../Component/Client/Card/CardCreate';
 import Products from '../../Component/Product/Products';
 import ProductDetails from '../../Component/Product/ProductDetails';
-import Cart from '../../Component/Client/Cart/Cart';
+import Cart from '../../Component/Order/Cart';
+import SelectAddress from '../../Component/Order/SelectAddress';
+import SelectCard from '../../Component/Order/SelectCard';
+import OrderSummary from '../../Component/Order/OrderSummary';
+
 
 
 function RoutesService() {
@@ -49,6 +53,12 @@ function RoutesService() {
         <Route path="/products/details/:id" element={<ProductDetails />} />
 
         <Route path="/cart" element={<Cart />} />
+
+        <Route path="/select_address" element={<SelectAddress />} />
+
+        <Route path="/select_card" element={<SelectCard />} />
+
+        <Route path="/order_summary" element={<OrderSummary />} />
 
       </Routes>
     </BrowserRouter>

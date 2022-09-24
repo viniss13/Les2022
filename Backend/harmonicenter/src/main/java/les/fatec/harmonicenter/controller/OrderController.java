@@ -1,9 +1,6 @@
 package les.fatec.harmonicenter.controller;
 
-import les.fatec.harmonicenter.DTO.CartDTO;
-import les.fatec.harmonicenter.DTO.OrderAddressDTO;
-import les.fatec.harmonicenter.DTO.OrderCardDTO;
-import les.fatec.harmonicenter.DTO.OrderStatusDTO;
+import les.fatec.harmonicenter.DTO.*;
 import les.fatec.harmonicenter.domain.*;
 import les.fatec.harmonicenter.domain.Enum.OrderStatus;
 import les.fatec.harmonicenter.facade.Facade;
@@ -56,6 +53,18 @@ public class OrderController {
         Card card = new Card(dto.getCard_id());
         Client client = new Client(dto.getClient_id());
         Order order = new Order(card, client);
+
+        result = facade.update(order);
+
+        return ResponseEntity.ok().body(result);
+    }
+
+    @PutMapping("/add_coupon")
+    public ResponseEntity add_coupon(@RequestBody OrderCouponDTO dto){
+
+        Coupon coupon = new Coupon(dto.getCoupon_id());
+        Client client = new Client(dto.getClient_id());
+        Order order = new Order(coupon, client);
 
         result = facade.update(order);
 

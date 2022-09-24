@@ -39,6 +39,7 @@ public class OrderDAO implements IDAO{
         
         Address address = order.getAddress();
         Card card = order.getCard();
+        Coupon coupon = order.getCoupon();
         OrderStatus status = order.getStatus();
 
         Order currentOrder;
@@ -53,6 +54,7 @@ public class OrderDAO implements IDAO{
 
             if(address != null) currentOrder.setAddress(address);
             if (card != null) currentOrder.setCard(card);
+            if(coupon != null) currentOrder.setCoupon(coupon);
         }
 
 
@@ -74,6 +76,9 @@ public class OrderDAO implements IDAO{
 
             this.create(order);
             currentOrder = orderRepository.findByClientIdAndStatusDraft(client_id);
+        } else {
+            Cart cart = cartRepository.findByClientIdAndCurrentCartTrue(client_id);
+            if(cart != null) currentOrder.setCart(cart);
         }
 
         return currentOrder;

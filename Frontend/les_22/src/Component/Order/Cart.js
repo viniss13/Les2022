@@ -1,16 +1,16 @@
 import React, { useState } from 'react'
-import CartService from '../../../service/Cart/CartService';
-import LocalStorageService from '../../../service/config/LocalStorageService';
 import { ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
+import CartService from '../../service/Cart/CartService';
+import LocalStorageService from '../../service/config/LocalStorageService';
 
 const cartService = new CartService();
 
 const Cart = () => {
 
   const [cart, setCart] = React.useState(null);
-
+  const navigate = useNavigate();
   
   const getCartData = () => {
 
@@ -43,14 +43,16 @@ const Cart = () => {
      }) 
      .catch(error => {})
   }
+
+  const selectOrderAddress = () =>{
+    navigate("/select_address");
+  }
+  
   return (
     <>
       <div className="card p-5 d-flex flex-row justify-content-center flex-wrap">
         <ToastContainer />
 
-        <div className="container">
-        
-        </div>
         {cart?.length === 0 && <h1>Sem items</h1>}
         {cart?.map((item) => (
           <div key={item.product.id} className="card m-3">
@@ -75,10 +77,13 @@ const Cart = () => {
             </div>
           </div>
         ))}
+        
       </div>
 
+      <div className="container justify-content-md-right">
+        <button onClick={selectOrderAddress} className="btn btn-primary">Selecionar endereço</button>
+      </div>
       <a href="/user_home" className="btn btn-outline-secondary mb-2 " >Voltar</a>
-
      
     </>
   )

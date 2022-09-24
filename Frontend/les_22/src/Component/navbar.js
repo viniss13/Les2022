@@ -1,6 +1,7 @@
 
 
 import React from "react";
+import { Link } from "react-router-dom";
 import AuthService from "../service/api/authService";
 import NavBarItem from "./navbarItem";
 
@@ -30,7 +31,9 @@ function NavBar() {
                 <div className="collapse navbar-collapse justify-content-end" id="navbarResponsive">
                     <ul className="navbar-nav ">
                         <NavBarItem href="/login" label="Login" />                        
-                        <NavBarItem onClick={logOut}  href="#/login" label="Sair" />
+                        <NavBarItem onClick={logOut}  href="/login" label="Sair" />
+                        <NavBarItem href="/cart" label="Carrinho" />                        
+
                                               
                     </ul>
                 </div>
