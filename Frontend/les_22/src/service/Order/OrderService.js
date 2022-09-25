@@ -19,6 +19,10 @@ class OrderService extends ApiService {
     return this.get(`/read_draft?client_id=${client_id}`);
   }
 
+  addCoupon(request){
+    return this.put("/add_coupon", request);
+  }
+
 }
 
 export default OrderService;

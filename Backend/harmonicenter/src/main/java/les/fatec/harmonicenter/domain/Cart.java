@@ -31,6 +31,9 @@ public class Cart extends DomainEntity {
     @Column
     private boolean currentCart = true;
 
+    @Column
+    private Double total_value;
+
     public Cart(CartDTO dto){
         this.client = new Client(dto.getClient_id());
         this.items = new ArrayList<>();

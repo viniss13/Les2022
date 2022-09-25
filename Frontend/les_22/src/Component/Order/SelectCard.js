@@ -39,7 +39,7 @@ const SelectCard = () => {
     orderService.addCard({ client_id: client_id, card_id: id })
       .then(() => {
 
-        navigate("/")
+        navigate("/order_summary")
         toast.success("Selecionado com sucesso!");
       })
       .catch((err) => {

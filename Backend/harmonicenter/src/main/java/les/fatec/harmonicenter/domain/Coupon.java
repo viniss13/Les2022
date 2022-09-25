@@ -60,4 +60,8 @@ public class Coupon extends DomainEntity {
     public Coupon(Long coupon_id) {
         super(coupon_id);
     }
+
+    public Coupon(String code){
+        this.code = code;
+    }
 }

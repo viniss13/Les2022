@@ -12,5 +12,5 @@ import lombok.Setter;
 public class OrderCouponDTO {
 
     private Long client_id;
-    private Long coupon_id;
+    private String coupon_code;
 }

@@ -62,7 +62,7 @@ public class OrderController {
     @PutMapping("/add_coupon")
     public ResponseEntity add_coupon(@RequestBody OrderCouponDTO dto){
 
-        Coupon coupon = new Coupon(dto.getCoupon_id());
+        Coupon coupon = new Coupon(dto.getCoupon_code());
         Client client = new Client(dto.getClient_id());
         Order order = new Order(coupon, client);
 

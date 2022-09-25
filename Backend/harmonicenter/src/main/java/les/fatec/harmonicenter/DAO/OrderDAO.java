@@ -3,6 +3,7 @@ package les.fatec.harmonicenter.DAO;
 import les.fatec.harmonicenter.domain.*;
 import les.fatec.harmonicenter.domain.Enum.OrderStatus;
 import les.fatec.harmonicenter.repository.CartRepository;
+import les.fatec.harmonicenter.repository.CouponRepository;
 import les.fatec.harmonicenter.repository.ItemRepository;
 import les.fatec.harmonicenter.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ public class OrderDAO implements IDAO{
 
     @Autowired
     OrderRepository orderRepository;
+
+    @Autowired
+    CouponRepository couponRepository;
 
     @Override
     public DomainEntity create(DomainEntity domainEntity) {
@@ -54,7 +58,12 @@ public class OrderDAO implements IDAO{
 
             if(address != null) currentOrder.setAddress(address);
             if (card != null) currentOrder.setCard(card);
-            if(coupon != null) currentOrder.setCoupon(coupon);
+
+            if(coupon != null) {
+                Coupon currentCoupon = couponRepository
+                        .findByCodeAndActiveTrueAndQuantityMoreThanZero(coupon.getCode(), order.getClient().getId(), "PROMOCIONAL");
+                currentOrder.setCoupon(currentCoupon);
+            }
         }
 
 

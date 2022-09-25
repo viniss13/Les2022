@@ -29,6 +29,9 @@ public class Item extends DomainEntity {
 
     @Column
     private Long quantity;
+    
+    @Column
+    private Double total_value;
 
     public Item(ItemDTO dto) {
         this.quantity = dto.getQuantity();
