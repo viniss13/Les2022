@@ -23,6 +23,28 @@ class OrderService extends ApiService {
     return this.put("/add_coupon", request);
   }
 
+  sendOrder(request){
+    return this.put("/update", request);
+  }
+  
+  getClientOrders(client_id){
+    return this.get(`/read_client?client_id=${client_id}`);
+  }
+
+  getOrderDetails(order_id){
+    return this.get(`/read_details?order_id=${order_id}`);
+  }
+
+  getOrders(){
+    return this.get("/read");
+  }
+
+  updateOrder(request){
+    return this.put("/update", request)
+  }
+
+
+
 }
 
 export default OrderService;

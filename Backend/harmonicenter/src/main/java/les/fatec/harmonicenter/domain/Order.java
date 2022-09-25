@@ -42,6 +42,9 @@ public class Order extends DomainEntity {
     @JoinColumn(name = "coupon_id")
     private Coupon coupon;
 
+    @Column
+    private Double order_value;
+
 
     public Order(Card card, Client client) {
         this.card = card;

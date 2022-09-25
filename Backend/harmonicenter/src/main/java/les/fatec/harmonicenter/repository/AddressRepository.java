@@ -9,4 +9,6 @@ import java.util.List;
 @Service
 public interface AddressRepository extends JpaRepository<Address, Long> {
     List<Address> findAllAddressByClientId(Long id);
+
+    Address findByIdAndActiveTrue(Long address_id);
 }

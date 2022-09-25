@@ -48,6 +48,8 @@ const ClientManagement = () => {
 
                 <a className="btn btn-outline-dark list-group-item mx-2 my-2 border border-dark" href="/products">Produtos</a>
 
+                <a className="btn btn-outline-dark list-group-item mx-2 my-2 border border-dark" href="/orders">Pedidos</a>
+
 
               </div>
 

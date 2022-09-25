@@ -86,10 +86,15 @@ const ProductDetails = () => {
       qtdMsg = response.data.msg.length;
 
         console.log("QUANTIDADES STRATEGY", qtdMsg);
+        
 
         if (qtdMsg === 0) {
-          navigate("/products")
+
           toast.success('Adicionado com sucesso!');
+
+          setTimeout(() => {
+            navigate("/products")
+          }, "2000");
         } else {
           let messages = response.data.msg;
           console.log("messages", messages);

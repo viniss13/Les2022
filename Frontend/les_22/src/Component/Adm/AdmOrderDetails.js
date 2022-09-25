@@ -1,0 +1,197 @@
+import React from 'react'
+import { useParams } from 'react-router-dom';
+import OrderService from '../../service/Order/OrderService';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+const orderService = new OrderService();
+
+const AdmOrderDetails = () => {
+
+    const params = useParams();
+    const [orderData, setOrderData] = React.useState(null);
+
+    const [order, setOrder] = React.useState(null);
+    const [cart, setCart] = React.useState(null);
+    const [card, setCard] = React.useState(null);
+    const [address, setAddress] = React.useState(null);
+    const [coupon, setCoupon] = React.useState(null);
+    const [code, setCode] = React.useState('');
+    const [cart_value, setCartValue] = React.useState(0);
+    const [order_value, setOrderValue] = React.useState(0);
+    const [coupon_value, setCouponValue] = React.useState(0);
+    const [client_id, setClientId] = React.useState('');
+    const [couponDiscount, setDiscount] = React.useState(0);
+    const [couponCode, setCouponCode] = React.useState(null);
+    const [status, setStatus] = React.useState(null);
+
+    console.log(params);
+
+    const orderDetails = () => {
+        orderService.getOrderDetails(params.id)
+            .then(response => {
+                console.log(response.data);
+                setOrder(response.data);
+                setCart(response.data.cart.items);
+                setCard(response.data.card);
+                setAddress(response.data.address);
+                setCartValue(response.data.cart.total_value);
+                if (response.data.coupon != null) {
+                    setCouponValue(response.data.coupon.coupon_value);
+                    setCoupon(response.data.coupon);
+                    setCouponCode(response.data.coupon.code);
+                }
+                setStatus(response.data.status);
+                // setCouponValue(response.data.entities[0].)
+
+                setOrderValue(response.data.order_value)
+            })
+    }
+
+    const confirmPayment = () => {
+        alert('aaaaaaaaaaaaaa')
+    }
+
+    const changeStatus = () => {
+        let nextStatus = '';
+
+        switch (status) {
+            case 'EM_ANALISE':
+                nextStatus = 'PAGAMENTO_REALIZADO';
+                break;
+            case 'PAGAMENTO_REALIZADO':
+                nextStatus = 'EM_TRANSPORTE';
+                break;
+            case 'EM_TRANSPORTE':
+                nextStatus = 'ENTREGA_REALIZADA';
+                break;
+            case 'ENTREGA_REALIZADA':
+                nextStatus = 'FINALIZADO';
+                break;
+        }
+
+        if (nextStatus != '') {
+            orderService.updateOrder({ "id": params.id, "status": nextStatus })
+                .then(response => {
+                  toast.dark("Status do Pedido atualizado com sucesso!")
+                    orderDetails();
+                }).catch(err => {
+
+                })
+        }
+
+    }
+
+    React.useEffect(() => {
+        orderDetails();
+    }, []);
+
+
+    return (
+        <>
+
+            <div className="card p-5 d-flex flex-row justify-content-center flex-wrap">
+                <ToastContainer />
+                <div className="container  p-5 d-flex flex-row justify-content-center flex-wrap ">
+                    <h1>Itens do Pedido</h1>
+                </div>
+                {cart?.length === 0 && <h1>Sem items</h1>}
+                {cart?.map((item) => (
+                    <div key={item.product.id} className="card m-3">
+                        {console.log('CARDS DENTRO DO MAP', item.product)}
+                        <div className="card-body" >
+                            <ul className="list-group list-group-flush">
+                                <li className="list-group-item">Nome: {item.product.name}</li>
+                                <li className="list-group-item">Preço: R$ {item.product.price}</li>
+                                <li className="list-group-item">Quantidade: {item.quantity}</li>
+                                <li className="list-group-item">Preço Total: R$ {item.total_value}</li>
+                            </ul>
+                        </div>
+
+
+                    </div>
+                ))}
+            </div>
+
+            {/* Fim itens */}
+
+            <div className="container p-5 d-flex flex-row justify-content-center flex-wrap ">
+                {address != null &&
+                    <div className="card m-3">
+                        <div className="card-body" >
+                            <h3>Endereço Selecionado</h3>
+                            <ul className="list-group list-group-flush">
+                                <li className="list-group-item">Logradouro: {address.logradouro}</li>
+                                <li className="list-group-item">Tipo Logradouro: {address.residencyType}</li>
+                                <li className="list-group-item">Número: {address.number}</li>
+                                <li className="list-group-item">CEP: {address.zipCode}</li>
+                                <li className="list-group-item">Observação: {address.observation}</li>
+
+                            </ul>
+                        </div>
+                    </div>
+                }
+                {card != null &&
+                    <div key={card.id} className="card m-3">
+                        <div className="card-body" >
+                            <h3>Cartão Selecionado</h3>
+                            <ul className="list-group list-group-flush">
+                                <li className="list-group-item">Apelido: {card.alias}</li>
+                                <li className="list-group-item">Bandeira: {card.flag}</li>
+                                <li className="list-group-item">Número: {card.number}</li>
+
+                            </ul>
+                        </div>
+                    </div>
+                }
+                {cart != null && //espera os atributos carregarem
+                    <div className="row">
+                        <div className="container p-5 d-flex flex-row justify-content-center flex-wrap ">
+                            <div className="card-body col-6">
+                                <h4 className="mt-4 mt-2">Status: {
+                                    <p className={{
+                                        'DRAFT': 'text-secondary',
+                                        'EM_ANALISE': 'text-warning',
+                                        'PAGAMENTO_REALIZADO': 'text-success',
+                                        'EM_TRANSPORTE': 'text-info',
+                                        'ENTREGA_REALIZADA': 'text-success',
+                                        'RECUSADO': 'text-danger',
+                                        'FINALIZADO': 'text-success'
+                                    }[status]}>{status}
+                                    </p>}
+                                </h4>
+                                {coupon != null &&
+                                    <>
+                                        <h4 className="mt-5">Valor da Compra: R$ {cart_value}</h4>
+                                        <h4 className="mt-5">Cupom utilizado: R$ {couponCode}</h4>
+                                        <h4 className="mt-5">Desconto do Cupom: R$ {coupon_value}</h4>
+                                    </>
+                                }
+
+                                <h4 className="mt-5">Total: R$ {order_value}</h4>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            {/* Fim Endereço */}
+            {status !== "FINALIZADO" &&
+                <div className="container p-5 d-flex flex-row justify-content-center flex-wrap ">
+
+                    <button onClick={changeStatus} className="btn btn-success">
+
+                        {status === 'EM_ANALISE' && 'Confirmar Pagamento'}
+                        {status === 'PAGAMENTO_REALIZADO' && 'Enviar Pedido'}
+                        {status === 'EM_TRANSPORTE' && 'Confirmar Entrega'}
+                        {status === 'ENTREGA_REALIZADA' && 'Finalizar Pedido'}
+
+                    </button>
+                    {/* <button className="btn btn-danger">Recusar Pedido</button> */}
+                </div>
+            }
+
+        </>
+    )
+}
+
+export default AdmOrderDetails

@@ -20,8 +20,8 @@ const OrderSummary = () => {
   const [total_value, setTotalValue] = React.useState(0);
   const [coupon_value, setCouponValue] = React.useState(0);
   const [client_id, setClientId] = React.useState('');
-  const [ couponDiscount, setDiscount] = React.useState(0);
-  const [ couponCode, setCouponCode] = React.useState('');
+  const [couponDiscount, setDiscount] = React.useState(0);
+  const [couponCode, setCouponCode] = React.useState('');
 
   const navigate = useNavigate();
 
@@ -33,7 +33,6 @@ const OrderSummary = () => {
 
     orderService.read_draft(client_id)
       .then(response => {
-        toast.success("Pedido pego com sucesso!");
         console.log("ORDERaaaaaaaaaa", response.data.entities[0].cart.total_value);
         setOrder(response.data.entities[0]);
         setCart(response.data.entities[0].cart.items);
@@ -76,7 +75,7 @@ const OrderSummary = () => {
           setDiscount(response.data.entities[0].coupon.coupon_value);
           getOrderData();
           toast.success("Cupom validado com sucesso!");
-          
+
         } else {
           let messages = response.data.msg;
           console.log("messages", messages);
@@ -92,6 +91,36 @@ const OrderSummary = () => {
       })
   }
 
+  const sendOrder = () => {
+    orderService.sendOrder({ id: order.id, status: 'EM_ANALISE' })
+      .then(response => {
+
+        const qtdMsg = response.data.msg.length;
+        if (qtdMsg === 0) {
+
+          console.log(qtdMsg);
+          console.log('RESPONSEDATRA', response.data);
+          toast.success("Pedido realizado com sucesso!");
+
+          setTimeout(() => {
+            navigate("/orders");
+          }, "2000");
+
+        } else {
+          let messages = response.data.msg;
+          console.log("messages", messages);
+          for (let i = 0; i < messages.length; i++) {
+            let msgs = messages[i].split("\n");
+            for (let message in msgs) {
+              toast.error(msgs[message]);
+            }
+          }
+        }
+
+      }).catch(err => {
+        toast.error(err)
+      })
+  }
 
   return (
     <>
@@ -161,7 +190,7 @@ const OrderSummary = () => {
                   value={code}
                   placeholder={couponCode}
                   onChange={(e) => setCode(e.target.value)}>
-                </input>                
+                </input>
 
                 <button onClick={verifyCoupon} className="btn mt-2" style={{ background: '#20c997', color: 'white' }}>Validar Cupom</button>
                 <h4 className="mt-5">Valor da Compra: R$ {total_value}</h4>
@@ -171,7 +200,9 @@ const OrderSummary = () => {
             </div>
           </div>
         }
-
+        <div className="card-body" >
+          <button className="btn btn-success" onClick={sendOrder}>Confirmar</button>
+        </div>
       </div>
       {/* Fim Endereço */}
 

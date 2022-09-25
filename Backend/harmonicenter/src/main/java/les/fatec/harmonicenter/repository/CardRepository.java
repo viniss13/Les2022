@@ -10,4 +10,6 @@ import java.util.List;
 public interface CardRepository extends JpaRepository<Card, Long> {
 
     List<Card> findAllCardByClientId(Long client_id);
+
+    Card findByIdAndActiveTrue(Long address_id);
 }

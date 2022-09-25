@@ -18,6 +18,11 @@ import Cart from '../../Component/Order/Cart';
 import SelectAddress from '../../Component/Order/SelectAddress';
 import SelectCard from '../../Component/Order/SelectCard';
 import OrderSummary from '../../Component/Order/OrderSummary';
+import Orders from '../../Component/Order/Orders';
+import OrderDetails from '../../Component/Order/OrderDetails';
+import AdmManagement from '../../Component/Adm/AdmManagement';
+import AdmOrders from '../../Component/Adm/AdmOrders';
+import AdmOrderDetails from '../../Component/Adm/AdmOrderDetails';
 
 
 
@@ -59,6 +64,17 @@ function RoutesService() {
         <Route path="/select_card" element={<SelectCard />} />
 
         <Route path="/order_summary" element={<OrderSummary />} />
+
+        <Route path="/orders" element={<Orders />} />
+
+        <Route path="/orders/details/:id" element={<OrderDetails />} />
+
+        <Route path="/admin" element={<AdmManagement />} />
+
+        <Route path="/adm_orders" element={<AdmOrders />} />
+
+        <Route path="/adm_orders/details/:id" element={<AdmOrderDetails />} />
+
 
       </Routes>
     </BrowserRouter>

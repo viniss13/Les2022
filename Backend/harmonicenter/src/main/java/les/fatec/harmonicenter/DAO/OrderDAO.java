@@ -2,10 +2,7 @@ package les.fatec.harmonicenter.DAO;
 
 import les.fatec.harmonicenter.domain.*;
 import les.fatec.harmonicenter.domain.Enum.OrderStatus;
-import les.fatec.harmonicenter.repository.CartRepository;
-import les.fatec.harmonicenter.repository.CouponRepository;
-import les.fatec.harmonicenter.repository.ItemRepository;
-import les.fatec.harmonicenter.repository.OrderRepository;
+import les.fatec.harmonicenter.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +23,9 @@ public class OrderDAO implements IDAO{
 
     @Autowired
     CouponRepository couponRepository;
+
+    @Autowired
+    ProductRepository productRepository;
 
     @Override
     public DomainEntity create(DomainEntity domainEntity) {
@@ -51,8 +51,34 @@ public class OrderDAO implements IDAO{
             currentOrder = orderRepository.findById(order.getId()).get();
             currentOrder.setStatus(status);
             currentOrder.getCart().setCurrentCart(false);
+
+            Double order_value = currentOrder.getCart().getTotal_value();
+
+            if(currentOrder.getCoupon() != null){
+                order_value -= currentOrder.getCoupon().getCoupon_value();
+            }
+            currentOrder.setOrder_value(order_value);
+
             orderRepository.save(currentOrder);
             cartRepository.save(currentOrder.getCart());
+
+            if(status == OrderStatus.EM_ANALISE){
+                List<Item> items = currentOrder.getCart().getItems();
+
+                for(Item item : items){
+                    Product product = item.getProduct();
+                    Long stock_quantity = product.getStock() - item.getQuantity();
+                    product.setStock(Math.toIntExact(stock_quantity));
+
+                    productRepository.save(product);
+                }
+
+                Coupon currentCoupon = currentOrder.getCoupon();
+
+                if(currentCoupon != null) {
+                    currentCoupon.setQuantity(currentCoupon.getQuantity() - 1);
+                }
+            }
         } else {
             currentOrder =  getOrder(order);
 
@@ -73,7 +99,7 @@ public class OrderDAO implements IDAO{
         orderRepository.save(currentOrder);
     }
 
-    private Order getOrder(Order order){
+    public Order getOrder(Order order){
 
         Long client_id = order.getClient().getId();
 

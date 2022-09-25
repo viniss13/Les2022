@@ -8,6 +8,7 @@ import les.fatec.harmonicenter.strategy.Card.ValidateCardFields;
 import les.fatec.harmonicenter.strategy.Card.VerifyExistingCardID;
 import les.fatec.harmonicenter.strategy.IStrategy;
 import les.fatec.harmonicenter.strategy.Order.ValidateCoupon;
+import les.fatec.harmonicenter.strategy.Order.ValidateOrder;
 import les.fatec.harmonicenter.strategy.client.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -111,6 +112,9 @@ public abstract class AbstractFacade {
 
     @Autowired
     ValidateCoupon validateCoupon;
+
+    @Autowired
+    ValidateOrder validateOrder;
 
     protected void initializeMaps() {
         daos.put(Client.class.getName(), clientDAO);
@@ -276,6 +280,7 @@ public abstract class AbstractFacade {
         List<IStrategy> readOrder = new ArrayList<>();
         List<IStrategy> updateOrder = new ArrayList<>();
         updateOrder.add(validateCoupon);
+        updateOrder.add(validateOrder);
         List<IStrategy> deleteOrder = new ArrayList<>();
         List<IStrategy> readByIDOrder = new ArrayList<>();
 
