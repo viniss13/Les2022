@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -45,6 +46,9 @@ public class Order extends DomainEntity {
     @Column
     private Double order_value;
 
+
+    @OneToMany(mappedBy = "order")
+    private List<Exchange> exchanges;
 
     public Order(Card card, Client client) {
         this.card = card;

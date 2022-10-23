@@ -58,6 +58,9 @@ public abstract class AbstractFacade {
     @Autowired
     CouponDAO couponDAO;
 
+    @Autowired
+    ExchangeDAO exchangeDAO;
+
     // ***************** Strategys ********************
 
     @Autowired
@@ -125,6 +128,7 @@ public abstract class AbstractFacade {
         daos.put(Item.class.getName(), cartDAO);
         daos.put(Order.class.getName(), orderDAO);
         daos.put(Coupon.class.getName(), couponDAO);
+        daos.put(Exchange.class.getName(), exchangeDAO);
 
         //***************************** CLIENT *****************************
         List<IStrategy> createClient = new ArrayList<>();
@@ -309,6 +313,23 @@ public abstract class AbstractFacade {
         couponRules.put(READ_BY_ID, readByIDCoupon);
 
         this.rules.put(Coupon.class.getName(), couponRules);
+
+        /// ************ Exchange ********************
+
+        List<IStrategy> createExchange = new ArrayList<>();
+        List<IStrategy> readExchange = new ArrayList<>();
+        List<IStrategy> updateExchange = new ArrayList<>();
+        List<IStrategy> deleteExchange = new ArrayList<>();
+        List<IStrategy> readByIDExchange = new ArrayList<>();
+
+        Map<String, List<IStrategy>> exchangeRules = new HashMap<>();
+        exchangeRules.put(CREATE, createExchange);
+        exchangeRules.put(READ, readExchange);
+        exchangeRules.put(UPDATE, updateExchange);
+        exchangeRules.put(DELETE, deleteExchange);
+        exchangeRules.put(READ_BY_ID, readByIDExchange);
+
+        this.rules.put(Exchange.class.getName(), exchangeRules);
     }
 
 }

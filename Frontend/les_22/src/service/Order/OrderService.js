@@ -43,8 +43,6 @@ class OrderService extends ApiService {
     return this.put("/update", request)
   }
 
-
-
 }
 
 export default OrderService;

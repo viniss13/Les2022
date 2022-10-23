@@ -104,7 +104,7 @@ const OrderSummary = () => {
 
           setTimeout(() => {
             navigate("/orders");
-          }, "2000");
+          }, "1000");
 
         } else {
           let messages = response.data.msg;

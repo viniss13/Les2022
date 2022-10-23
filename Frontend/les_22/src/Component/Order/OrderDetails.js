@@ -1,11 +1,14 @@
 import React from 'react'
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import OrderService from '../../service/Order/OrderService';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+
 const OrderDetails = () => {
 
+  const navigate = useNavigate();
+  
   const params = useParams();
   const [orderData, setOrderData] = React.useState(null);
 
@@ -22,6 +25,7 @@ const OrderDetails = () => {
   const [couponDiscount, setDiscount] = React.useState(0);
   const [couponCode, setCouponCode] = React.useState(null);
   const [status, setStatus] = React.useState(null);
+  const [exchanges, setExchanges] = React.useState(null);
   const orderService = new OrderService();
 
   console.log(params);
@@ -35,6 +39,8 @@ const OrderDetails = () => {
         setCard(response.data.card);
         setAddress(response.data.address);
         setCartValue(response.data.cart.total_value);
+       setExchanges(response.data.exchanges);
+        console.log("MEU PEDIDO", response.data.exchanges);
         if(response.data.coupon != null){
           setCouponValue(response.data.coupon.coupon_value);
           setCoupon(response.data.coupon);
@@ -52,6 +58,10 @@ const OrderDetails = () => {
   }, [])
 
 
+  const exchange = () => {
+    navigate(`/exchange/${params.id}`)
+  }
+
   return (
     <>
 
@@ -60,7 +70,7 @@ const OrderDetails = () => {
         <div className="container  p-5 d-flex flex-row justify-content-center flex-wrap ">
           <h1>Itens do Pedido</h1>
         </div>
-        {cart?.length === 0 && <h1>Sem items</h1>}
+        {cart?.length === 0 && <div></div>}
         {cart?.map((item) => (
           <div key={item.product.id} className="card m-3">
             {console.log('CARDS DENTRO DO MAP', item.product)}
@@ -72,13 +82,34 @@ const OrderDetails = () => {
                 <li className="list-group-item">Preço Total: R$ {item.total_value}</li>
               </ul>
             </div>
-
-
           </div>
         ))}
       </div>
 
       {/* Fim itens */}
+
+      <div className="card p-5 d-flex flex-row justify-content-center flex-wrap">
+        
+        {exchanges?.length !== 0 && 
+            <div className="container  p-5 d-flex flex-row justify-content-center flex-wrap ">
+              <h1>Itens para Troca</h1>
+            </div>
+          }    
+
+          {exchanges?.map((item) => (
+          <div key={item.product.id} className="card m-3">            
+            <div className="card-body" >
+              <ul className="list-group list-group-flush">
+                <li className="list-group-item">Nome: {item.product.name}</li>
+                <li className="list-group-item">Preço: R$ {item.product.price}</li>
+                <li className="list-group-item">Quantidade: {item.quantity}</li>
+                <li className="list-group-item">Preço Total: R$ {item.total_value}</li>
+              </ul>
+            </div>
+          </div>
+        ))}
+        </div>
+      {/* Fim pedidos de troca */}
 
       <div className="container p-5 d-flex flex-row justify-content-center flex-wrap ">
         {address != null &&
@@ -131,10 +162,20 @@ const OrderDetails = () => {
                     <h4 className="mt-5">Cupom utilizado: R$ {couponCode}</h4>
                     <h4 className="mt-5">Desconto do Cupom: R$ {coupon_value}</h4>
                   </>
-                }
+                }             
 
                 <h4 className="mt-5">Total: R$ {order_value}</h4>
 
+                 
+                {status === "ENTREGA_REALIZADA" &&
+                  <div className="flex-wrap mt-4">
+                    <button 
+                      className="btn btn-warning text-black" 
+                      onClick={exchange}
+                      >Requisitar Troca</button>         
+                  </div>       
+                }
+                
               </div>
             </div>
           </div>

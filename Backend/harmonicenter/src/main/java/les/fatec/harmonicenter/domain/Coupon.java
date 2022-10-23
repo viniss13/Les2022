@@ -64,4 +64,12 @@ public class Coupon extends DomainEntity {
     public Coupon(String code){
         this.code = code;
     }
+
+    public Coupon(String exchangeCode, Long quantity, Double couponPrice, CouponType type, Long clientID) {
+        this.code = exchangeCode;
+        this.quantity = Math.toIntExact(quantity);
+        this.coupon_value = couponPrice;
+        this.type = type;
+        this.client = new Client(clientID);
+    }
 }

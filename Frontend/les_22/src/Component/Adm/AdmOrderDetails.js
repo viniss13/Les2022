@@ -24,6 +24,7 @@ const AdmOrderDetails = () => {
     const [couponDiscount, setDiscount] = React.useState(0);
     const [couponCode, setCouponCode] = React.useState(null);
     const [status, setStatus] = React.useState(null);
+    const [exchanges, setExchanges] = React.useState(null);
 
     console.log(params);
 
@@ -36,6 +37,8 @@ const AdmOrderDetails = () => {
                 setCard(response.data.card);
                 setAddress(response.data.address);
                 setCartValue(response.data.cart.total_value);
+                setExchanges(response.data.exchanges);
+
                 if (response.data.coupon != null) {
                     setCouponValue(response.data.coupon.coupon_value);
                     setCoupon(response.data.coupon);
@@ -68,18 +71,35 @@ const AdmOrderDetails = () => {
             case 'ENTREGA_REALIZADA':
                 nextStatus = 'FINALIZADO';
                 break;
+            case 'TROCA_PENDENTE':
+                nextStatus = 'TROCA_AUTORIZADA';
+                break;
+            case 'TROCA_AUTORIZADA':
+                nextStatus = 'TROCA_CONCLUIDA';
+                break;
+
         }
 
         if (nextStatus != '') {
             orderService.updateOrder({ "id": params.id, "status": nextStatus })
                 .then(response => {
-                  toast.dark("Status do Pedido atualizado com sucesso!")
+                    toast.dark("Status do Pedido atualizado com sucesso!")
                     orderDetails();
                 }).catch(err => {
 
                 })
         }
 
+    }
+
+    const rejectExchange = () =>{
+        orderService.updateOrder({ "id": params.id, "status": "TROCA_REJEITADA" })
+                .then(response => {
+                    toast.dark("Status do Pedido atualizado com sucesso!")
+                    orderDetails();
+                }).catch(err => {
+
+                })
     }
 
     React.useEffect(() => {
@@ -114,6 +134,31 @@ const AdmOrderDetails = () => {
             </div>
 
             {/* Fim itens */}
+
+            <div className="p-5 d-flex flex-row justify-content-center flex-wrap">
+
+                {exchanges?.length !== 0 &&
+                    <div className="container  p-5 d-flex flex-row justify-content-center flex-wrap ">
+                        <h1>Itens para Troca</h1>
+                        <hr />
+                    </div>
+                }
+
+                {exchanges?.map((item) => (
+                    <div key={item.product.id} className="card m-3">
+
+                        <div className="card-body" >
+                            <ul className="list-group list-group-flush">
+                                <li className="list-group-item">Nome: {item.product.name}</li>
+                                <li className="list-group-item">Preço: R$ {item.product.price}</li>
+                                <li className="list-group-item">Quantidade: {item.quantity}</li>
+                                <li className="list-group-item">Preço Total: R$ {item.total_value}</li>
+                            </ul>
+                        </div>
+                    </div>
+                ))}
+            </div>
+            {/* Fim pedidos de troca */}
 
             <div className="container p-5 d-flex flex-row justify-content-center flex-wrap ">
                 {address != null &&
@@ -175,20 +220,34 @@ const AdmOrderDetails = () => {
                 }
             </div>
             {/* Fim Endereço */}
-            {status !== "FINALIZADO" &&
-                <div className="container p-5 d-flex flex-row justify-content-center flex-wrap ">
+            <div className="row">
+                {status !== "FINALIZADO" && status !== "TROCA_REALIZADA" && status !== "TROCA_REJEITADA" && status !== "TROCA_CONCLUIDA" &&
+                    <div className="container col-6 p-5 d-flex  justify-content-center">
 
-                    <button onClick={changeStatus} className="btn btn-success">
+                        <button onClick={changeStatus} className="btn btn-success">
 
-                        {status === 'EM_ANALISE' && 'Confirmar Pagamento'}
-                        {status === 'PAGAMENTO_REALIZADO' && 'Enviar Pedido'}
-                        {status === 'EM_TRANSPORTE' && 'Confirmar Entrega'}
-                        {status === 'ENTREGA_REALIZADA' && 'Finalizar Pedido'}
+                            {status === 'EM_ANALISE' && 'Confirmar Pagamento'}
+                            {status === 'PAGAMENTO_REALIZADO' && 'Enviar Pedido'}
+                            {status === 'EM_TRANSPORTE' && 'Confirmar Entrega'}
+                            {status === 'ENTREGA_REALIZADA' && 'Finalizar Pedido'}
+                            {status === 'TROCA_PENDENTE' && 'Autorizar Troca'}
+                            {status == 'TROCA_AUTORIZADA' && 'Concluir Troca'}
 
-                    </button>
-                    {/* <button className="btn btn-danger">Recusar Pedido</button> */}
-                </div>
-            }
+                        </button>
+                        {/* <button className="btn btn-danger">Recusar Pedido</button> */}
+                    </div>}
+
+                {status === "TROCA_PENDENTE" &&
+                    <div className="container col-6 p-5  ">
+
+                        <button onClick={rejectExchange} className="btn btn-danger">
+                            Rejeitar Troca
+                        </button>
+                        {/* <button className="btn btn-danger">Recusar Pedido</button> */}
+                    </div>}
+            </div>
+
+
 
         </>
     )

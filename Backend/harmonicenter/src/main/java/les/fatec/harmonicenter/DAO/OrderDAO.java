@@ -1,6 +1,7 @@
 package les.fatec.harmonicenter.DAO;
 
 import les.fatec.harmonicenter.domain.*;
+import les.fatec.harmonicenter.domain.Enum.CouponType;
 import les.fatec.harmonicenter.domain.Enum.OrderStatus;
 import les.fatec.harmonicenter.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,6 +79,27 @@ public class OrderDAO implements IDAO{
                 if(currentCoupon != null) {
                     currentCoupon.setQuantity(currentCoupon.getQuantity() - 1);
                 }
+            } else if (status == OrderStatus.TROCA_CONCLUIDA){
+                List<Exchange> exchanges = currentOrder.getExchanges();
+
+                Double couponPrice = 0.0;
+                for(Exchange exchange : exchanges){
+                    Product product = exchange.getProduct();
+                    Long stock_quantity = product.getStock() + exchange.getQuantity();
+                    product.setStock(Math.toIntExact(stock_quantity));
+
+                    productRepository.save(product);
+
+                    couponPrice += exchange.getTotal_value();
+                }
+
+                String exchangeCode = "EXCHANGE" + couponPrice;
+                Long quantity = 1L;
+                CouponType type = CouponType.TROCA;
+                Long clientID = currentOrder.getClient().getId();
+                Coupon clientCoupon = new Coupon(exchangeCode, quantity, couponPrice, type, clientID);
+
+                couponRepository.save(clientCoupon);
             }
         } else {
             currentOrder =  getOrder(order);

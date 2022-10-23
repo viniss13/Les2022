@@ -23,6 +23,7 @@ import OrderDetails from '../../Component/Order/OrderDetails';
 import AdmManagement from '../../Component/Adm/AdmManagement';
 import AdmOrders from '../../Component/Adm/AdmOrders';
 import AdmOrderDetails from '../../Component/Adm/AdmOrderDetails';
+import Exchange from '../../Component/Order/Exchange';
 
 
 
@@ -75,6 +76,7 @@ function RoutesService() {
 
         <Route path="/adm_orders/details/:id" element={<AdmOrderDetails />} />
 
+        <Route path="/exchange/:id" element={<Exchange />} />
 
       </Routes>
     </BrowserRouter>
