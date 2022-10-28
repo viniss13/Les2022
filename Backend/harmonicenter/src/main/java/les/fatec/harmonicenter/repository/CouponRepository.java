@@ -27,5 +27,9 @@ public interface CouponRepository extends JpaRepository<Coupon, Long>{
     Coupon findByCodeAndActiveTrueAndQuantityMoreThanZero(@Param("code") String code,
                                                           @Param("client_id")Long client_id,
                                                           @Param("type") String type);
+
+    @Query(nativeQuery = true,
+    value = "SELECT * FROM _COUPON WHERE client = :client_id AND QUANTITY > 0 AND ACTIVE = TRUE ")
+    List<Coupon> findAllByClientIdAndQuantityMoreThanZeroAndActiveTrue(Long client_id);
 }
 

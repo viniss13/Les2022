@@ -24,6 +24,8 @@ import AdmManagement from '../../Component/Adm/AdmManagement';
 import AdmOrders from '../../Component/Adm/AdmOrders';
 import AdmOrderDetails from '../../Component/Adm/AdmOrderDetails';
 import Exchange from '../../Component/Order/Exchange';
+import ClientCoupons from '../../Component/Client/ClientCoupons';
+import ClientPasswordUpdate from '../../Component/Client/ClientPasswordUpdate';
 
 
 
@@ -43,6 +45,8 @@ function RoutesService() {
         <Route path="/client_profile" element={<ClientProfile />} />
 
         <Route path="/client_update" element={<ClientUpdate />} />
+
+        <Route path="/password_update" element={<ClientPasswordUpdate />} />
 
         <Route path="/client_cards" element={<Cards />} />
 
@@ -69,6 +73,8 @@ function RoutesService() {
         <Route path="/orders" element={<Orders />} />
 
         <Route path="/orders/details/:id" element={<OrderDetails />} />
+        
+        <Route path="/coupons_list" element={<ClientCoupons />} />
 
         <Route path="/admin" element={<AdmManagement />} />
 
@@ -77,7 +83,7 @@ function RoutesService() {
         <Route path="/adm_orders/details/:id" element={<AdmOrderDetails />} />
 
         <Route path="/exchange/:id" element={<Exchange />} />
-
+        
       </Routes>
     </BrowserRouter>
   )

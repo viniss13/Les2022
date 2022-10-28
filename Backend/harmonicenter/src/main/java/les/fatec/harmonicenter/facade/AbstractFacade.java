@@ -119,6 +119,9 @@ public abstract class AbstractFacade {
     @Autowired
     ValidateOrder validateOrder;
 
+    @Autowired
+    ValidateChangePassword validateChangePassword;
+
     protected void initializeMaps() {
         daos.put(Client.class.getName(), clientDAO);
         daos.put(Address.class.getName(), addressDAO);
@@ -143,11 +146,12 @@ public abstract class AbstractFacade {
 
         /// ************ EDITAR ***************
         List<IStrategy> editClient = new ArrayList<>();
-        editClient.add(validateFieldEmail);
+        /*editClient.add(validateFieldEmail);
         editClient.add(validateFieldBirthDate);
         editClient.add(validateFieldDDD);
         editClient.add(validateFieldGender);
-        editClient.add(validateFieldPhoneNumber);
+        editClient.add(validateFieldPhoneNumber);*/
+        editClient.add(validateChangePassword);
 
         // ********** pesquisar todos *********
         List<IStrategy> readClient = new ArrayList<>();

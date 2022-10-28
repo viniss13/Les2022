@@ -43,16 +43,28 @@ public class ClientDAO implements IDAO {
     public void update(DomainEntity domainEntity) {
 
         Client currentClient = ( Client ) domainEntity;
-        Client previousClient = clientRepository.getReferenceById(currentClient.getId());
+        Client previousClient;
 
-        previousClient.setUpdatedDate(LocalDateTime.now());
-        previousClient.setName(currentClient.getName());
-        previousClient.setEmail(currentClient.getEmail());
-        previousClient.setGender(currentClient.getGender());
-        previousClient.setBirthDate(currentClient.getBirthDate());
-        previousClient.setCpf(currentClient.getCpf());
-        previousClient.setAreaCode(currentClient.getAreaCode());
-        previousClient.setPhoneType(currentClient.getPhoneType());
+        String confirmOldPassword = currentClient.getConfirmOldPassword();
+        if(!confirmOldPassword.isEmpty() && !confirmOldPassword.equals("") && !confirmOldPassword.isBlank() && confirmOldPassword != null) {
+            String password = currentClient.getPassword();
+
+            previousClient = clientRepository.getReferenceById(currentClient.getId());
+
+            previousClient.setPassword(password);
+
+
+        } else {
+            previousClient = clientRepository.getReferenceById(currentClient.getId());
+            previousClient.setUpdatedDate(LocalDateTime.now());
+            previousClient.setName(currentClient.getName());
+            previousClient.setEmail(currentClient.getEmail());
+            previousClient.setGender(currentClient.getGender());
+            previousClient.setBirthDate(currentClient.getBirthDate());
+            previousClient.setCpf(currentClient.getCpf());
+            previousClient.setAreaCode(currentClient.getAreaCode());
+            previousClient.setPhoneType(currentClient.getPhoneType());
+        }
 
         clientRepository.save(previousClient);
     }

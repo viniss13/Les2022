@@ -1,5 +1,6 @@
 package les.fatec.harmonicenter.controller;
 
+import les.fatec.harmonicenter.DTO.ClientChangePasswordDTO;
 import les.fatec.harmonicenter.DTO.ClientLoginDTO;
 import les.fatec.harmonicenter.DTO.ClientSaveDTO;
 import les.fatec.harmonicenter.DTO.ClientUpdateDTO;
@@ -61,6 +62,15 @@ public class ClientController {
        result = facade.update(client);
 
        return ResponseEntity.ok().body(result);
+    }
+
+    @PutMapping("/update_password")
+    public ResponseEntity<Result> update(@RequestBody ClientChangePasswordDTO clientChangePasswordDTO){
+
+        Client client = new Client(clientChangePasswordDTO);
+        result = facade.update(client);
+
+        return ResponseEntity.ok().body(result);
     }
 
     @DeleteMapping("/delete")

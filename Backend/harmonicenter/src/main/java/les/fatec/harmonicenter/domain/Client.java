@@ -1,6 +1,7 @@
 package les.fatec.harmonicenter.domain;
 
 import com.sun.istack.NotNull;
+import les.fatec.harmonicenter.DTO.ClientChangePasswordDTO;
 import les.fatec.harmonicenter.DTO.ClientLoginDTO;
 import les.fatec.harmonicenter.DTO.ClientSaveDTO;
 import les.fatec.harmonicenter.DTO.ClientUpdateDTO;
@@ -37,6 +38,12 @@ public class Client extends DomainEntity {
 
     @Column(name = "password")
     private String password;
+
+    @Transient
+    private String confirmNewPassword;
+
+    @Transient
+    private String confirmOldPassword;
 
     @Column(name = "birthDate")
     private LocalDate birthDate;
@@ -106,5 +113,13 @@ public class Client extends DomainEntity {
 
     public Client(Long id) {
         super(id);
+    }
+
+    public Client(ClientChangePasswordDTO clientChangePasswordDTO) {
+        super(clientChangePasswordDTO.getClient_id());
+        this.password = clientChangePasswordDTO.getNew_password();
+        this.confirmNewPassword = clientChangePasswordDTO.getConfirm_new_password();
+        this.confirmOldPassword = clientChangePasswordDTO.getConfirm_old_password();
+
     }
 }

@@ -2,8 +2,6 @@
 import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import LocalStorageService from '../../service/config/LocalStorageService';
-
-
 import { ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -82,8 +80,8 @@ const ClientProfile = () => {
                 <div className="form-group">
 
                     <a href="/user_home" className="btn btn-outline-secondary mb-2 " >Voltar</a>
-
                     <a href="/client_update" className="btn btn-primary mb-2 " >Alterar Dados</a>
+                    <a href="/password_update" className="btn btn-warning mb-2 " >Alterar Senha</a>
 
                     <button onClick={deleteAccount} type="button" className="btn btn-danger mb-2 ">Inativar Conta</button>
 

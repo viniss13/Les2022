@@ -23,27 +23,16 @@ const ProductDetails = () => {
   const [family, setFamily] = React.useState("");
   const [brand, setBrand] = React.useState("");
 
-  const [quantity, dispatch] = React.useReducer(reducer, 0);
+  // const [quantity, dispatch] = React.useReducer(reducer, 0);
+
+  let [ quantity, setquantity] = React.useState(0);
+
   const navigate = useNavigate();
 
   const params = useParams();
 
   console.log(params);
 
-
-  function reducer(quantity, action) {
-    console.log(action);
-    switch (action) {
-      case 'aumentar':
-        if (quantity === stock) return quantity;
-        return quantity + 1;
-      case 'diminuir':
-        if (quantity === 0) return quantity;
-        return quantity - 1;
-      default:
-        throw new Error();
-    }
-  }
 
   const getProduct = () => {
     productService.getById(params.id)
@@ -63,6 +52,27 @@ const ProductDetails = () => {
   React.useEffect(() => {
     getProduct();
   })
+
+  React.useEffect(() => {
+
+    let myQuantity = Number(quantity);
+
+    console.log("MEU NUMBER", myQuantity);
+
+    if(isNaN(myQuantity)){
+      setquantity(0);
+      toast.error("Quantidade inválida!");
+    }
+    else if(quantity < 0 ){
+      setquantity(0);
+      toast.error("Quantidade inválida!");
+    }else if(quantity > stock){
+      setquantity(stock);
+      toast.error("Quantidade inválida!");
+    }
+
+  },[quantity])
+
 
   const addToCart = () => {
     if(quantity <= 0 || quantity > stock){
@@ -113,6 +123,10 @@ const ProductDetails = () => {
    
   }
 
+  const changeValue = (value) =>{
+    setquantity( Number(value) );
+  }
+
   return (
     <>
         <div className="container">
@@ -133,10 +147,18 @@ const ProductDetails = () => {
             <p className="card-text"><strong>Familia: </strong> {family}.</p>
             <p className="card-text"><strong>Marca: </strong> {brand}.</p>
             <p className="card-text">
-              <strong>Quantidade:</strong>
-              <button onClick={() => dispatch('aumentar')} className="btn btn-primary mx-2">Adicionar</button>
-              <button onClick={() => dispatch('diminuir')} className="btn btn-danger"> Retirar </button>
-              <p>{quantity}</p>
+              <strong className="card-text">Quantidade: </strong>
+            <input                  
+                  id="quantity"
+                  className="card-text rounded-pill border border-2 border-dark"
+                  name="quantity"
+                  placeholder="0"
+                  value={quantity}
+                  onChange={({ target }) => changeValue(target.value)}
+                />
+
+              <button onClick={() => setquantity(quantity + 1)} className="btn btn-primary mx-2">Adicionar</button>
+              <button onClick={() => setquantity(quantity - 1)} className="btn btn-danger"> Retirar </button>              
             </p>
           </div>
           <button

@@ -22,6 +22,11 @@ class ClientService extends ApiService {
     return this.post('/create', client);
   }
 
+  changePassword(passwords){
+
+    return this.put('/update_password', passwords)
+  }
+
    delete(id) {      
 
        return this.delete(`/delete?id=${id}`);

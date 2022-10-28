@@ -68,7 +68,7 @@ public class CouponDAO implements IDAO{
             coupons = couponRepository.findAll();
         } else {
             Long client_id = client.getId();
-            coupons = couponRepository.findAllByClientId(client_id);
+            coupons = couponRepository.findAllByClientIdAndQuantityMoreThanZeroAndActiveTrue(client_id);
         }
 
         for(Coupon currentCoupon : coupons ){

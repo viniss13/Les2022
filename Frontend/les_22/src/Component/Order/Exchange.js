@@ -119,9 +119,10 @@ const Exchange = () => {
                   value= {item.exchange_quantity1}
                   onBlur={(e) => 
                     e.target.value = setExchangeQuantity( e.target.value, item.id) 
-                    } />
-                  </ul>                
+                    } 
+                    />
 
+                  </ul>
             </div>
           </div>
         ))}

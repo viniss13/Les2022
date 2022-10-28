@@ -61,7 +61,6 @@ const SelectCard = () => {
         {cards?.length === 0 && <h1>Sem cartões</h1>}
         {cards?.map((card) => (
           <div key={card.id} className="card m-3">
-            {console.log('CARDS DENTRO DO MAP', cards)}
             <div className="card-body" >
               <ul className="list-group list-group-flush">
                 <li className="list-group-item">Apelido: {card.alias}</li>

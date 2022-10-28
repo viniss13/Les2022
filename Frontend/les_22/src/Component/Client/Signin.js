@@ -86,8 +86,6 @@ const Signin = () => {
     )
     return (
         <>
-
-
             <section className="container bg-secondary px-5 py-5 mb-5 my-5 font-weight-bold text-white">
 
                 <div className="container">
