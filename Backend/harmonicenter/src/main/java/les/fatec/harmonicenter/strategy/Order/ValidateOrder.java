@@ -49,7 +49,7 @@ public class ValidateOrder implements IStrategy {
                 Long cart_id = null;
 
                 if(currentOrder.getAddress() == null) messages.add("Endereço não encontrado");
-                if(currentOrder.getCard() == null) messages.add("Cartão não encontrado");
+              //  if(currentOrder.getCard() == null) messages.add("Cartão não encontrado");
 
 
                 Cart cart = currentOrder.getCart();

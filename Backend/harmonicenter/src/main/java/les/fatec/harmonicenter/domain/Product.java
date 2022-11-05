@@ -32,7 +32,7 @@ public class Product extends DomainEntity{
     private Double price;
 
     @Enumerated(EnumType.STRING)
-    @Column( name = "caterogy")
+    @Column( name = "category")
     private Category category;
 
     @Enumerated(EnumType.STRING)
@@ -42,6 +42,9 @@ public class Product extends DomainEntity{
     @Enumerated(EnumType.STRING)
     @Column( name = "instrumentBrand")
     private InstrumentBrand instrumentBrand;
+
+    @Transient
+    private String search;
 
     public Product(ProductDTO dto) {
         this.stock = dto.getStock();

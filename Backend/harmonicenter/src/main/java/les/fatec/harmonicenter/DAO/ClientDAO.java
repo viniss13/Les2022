@@ -5,6 +5,7 @@ import les.fatec.harmonicenter.domain.DomainEntity;
 import les.fatec.harmonicenter.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -70,6 +71,7 @@ public class ClientDAO implements IDAO {
     }
 
     @Override
+    @Transactional
     public DomainEntity login(DomainEntity domainEntity) {
 
         Client client = ( Client ) domainEntity;

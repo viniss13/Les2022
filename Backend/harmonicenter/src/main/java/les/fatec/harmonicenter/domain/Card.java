@@ -5,6 +5,7 @@ import les.fatec.harmonicenter.DTO.CardDTO;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -45,6 +46,15 @@ public class Card extends DomainEntity {
 
     @Column(name = "alias")
     private String alias;
+
+    /*
+    @OneToMany(mappedBy = "teste")
+    @JsonIgnore
+    private List<Requestcard> requestcards;*/
+
+    @OneToMany(mappedBy = "card")
+    @JsonIgnore
+    private List<Requestcard> requestCards;
 
     public Card(CardDTO cardDTO) {
 

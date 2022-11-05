@@ -1,8 +1,10 @@
 package les.fatec.harmonicenter.controller;
 
 import les.fatec.harmonicenter.DTO.ProductDTO;
-import les.fatec.harmonicenter.domain.Client;
+import les.fatec.harmonicenter.DTO.RequestCardDTO;
+import les.fatec.harmonicenter.domain.Order;
 import les.fatec.harmonicenter.domain.Product;
+import les.fatec.harmonicenter.domain.Requestcard;
 import les.fatec.harmonicenter.domain.Result;
 import les.fatec.harmonicenter.facade.Facade;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +13,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/api/products")
-public class ProductController {
+@RequestMapping("/api/request_cards")
+public class RequestcardController {
 
     @Autowired
     private Facade facade;
@@ -25,28 +25,11 @@ public class ProductController {
     private Result result;
 
     @PostMapping("/create")
-    public ResponseEntity save(@RequestBody ProductDTO dto){
+    public ResponseEntity save(@RequestBody RequestCardDTO dto){
 
-        Product product = new Product(dto);
+        Requestcard requestcard = new Requestcard(dto);
 
-        result = facade.create(product);
-
-        if( result.getMsg().isEmpty()){
-            return ResponseEntity.status(HttpStatus.CREATED).body(result);
-        }else{
-            return ResponseEntity.badRequest().body(result);
-        }
-    }
-
-    @PostMapping("/create_all")
-    public ResponseEntity saveAll(@RequestBody List<ProductDTO> dtos){
-
-        for(ProductDTO dto : dtos ){
-            Product product = new Product(dto);
-            result = facade.create(product);
-        }
-
-
+        result = facade.create(requestcard);
 
         if( result.getMsg().isEmpty()){
             return ResponseEntity.status(HttpStatus.CREATED).body(result);
@@ -54,25 +37,14 @@ public class ProductController {
             return ResponseEntity.badRequest().body(result);
         }
     }
+
 
     @GetMapping("/read")
-    public ResponseEntity read(@Param("search") String search){
+    public ResponseEntity<Result> read(@Param("order_id") Long order_id){
 
-        Product product = new Product();
+        Requestcard requestcard = new Requestcard(new Order(order_id));
 
-        product.setSearch(search);
-
-        result = facade.read(product);
-
-        return ResponseEntity.ok().body(result);
-    }
-
-    @GetMapping("/read_by_id")
-    public ResponseEntity<Result> readById(@Param("id") Long id){
-
-        Product product = new Product(id);
-
-        result = facade.readById(product);
+        result = facade.read(requestcard);
 
         return ResponseEntity.ok().body(result);
     }

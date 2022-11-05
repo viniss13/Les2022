@@ -3,12 +3,18 @@ import CartService from '../../service/Cart/CartService';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import OrderService from '../../service/Order/OrderService';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import LocalStorageService from '../../service/config/LocalStorageService';
+import CardService from '../../service/Card/CardService';
+import RequestCardService from '../../service/Order/RequestCardService';
+
 
 const cartService = new CartService();
+const cardService = new CardService();
+
 
 const orderService = new OrderService();
+const requestCardService = new RequestCardService();
 const OrderSummary = () => {
 
   const [order, setOrder] = React.useState(null);
@@ -22,6 +28,12 @@ const OrderSummary = () => {
   const [client_id, setClientId] = React.useState('');
   const [couponDiscount, setDiscount] = React.useState(0);
   const [couponCode, setCouponCode] = React.useState('');
+  const [cards, setCards] = React.useState(null);
+  let [cardValues, setCardValues] = React.useState({});
+
+  let testee = "";
+
+ // let cardValues = {};
 
   const navigate = useNavigate();
 
@@ -29,11 +41,9 @@ const OrderSummary = () => {
 
     const client_id = parseInt(LocalStorageService.obterItem("_logged_user").entities[0].id);
     setClientId(client_id);
-    console.log(client_id);
 
     orderService.read_draft(client_id)
       .then(response => {
-        console.log("ORDERaaaaaaaaaa", response.data.entities[0].cart.total_value);
         setOrder(response.data.entities[0]);
         setCart(response.data.entities[0].cart.items);
         setCard(response.data.entities[0].card);
@@ -43,15 +53,19 @@ const OrderSummary = () => {
         // setCouponValue(response.data.entities[0].)
         setCoupon(response.data.entities[0].coupon);
         setCouponCode(response.data.entities[0].coupon.code);
-
+        
       }).catch(error => {
-
         // toast.error("Não foi possível executar o comando");
-        console.log("Error", error);
+      }).finally( final => {
+        getAllCards();
       })
   }
 
-  React.useEffect(() => {
+  React.useEffect(() => {   
+    console.log("cardvalues", cardValues);
+  }, [cardValues])
+
+  React.useEffect(() => {   
     getOrderData();
   }, [])
 
@@ -63,22 +77,43 @@ const OrderSummary = () => {
     navigate("/select_card")
   }
 
+  const getAllCards = () => {
+    const userData = LocalStorageService.obterItem("_logged_user");
+    const id = userData.entities[0].id;
+
+    cardService.getAllcards(id)
+      .then(response => {
+        setCards(response.data.entities);
+
+        let cards = response.data.entities;
+
+        let myCardValues = {};
+
+        for(let i = 0; i < cards.length; i++){
+          myCardValues[cards[i].id] = 0;
+        }
+
+        console.log("ihuuuu",myCardValues);
+        setCardValues(myCardValues);
+        
+
+      }).catch(error => {
+        console.error("erro recuperando cartões do usuário", id, error)
+      })
+  }
+
   const verifyCoupon = () => {
     orderService.addCoupon({ coupon_code: code, client_id: client_id })
       .then(response => {
-        console.log('bbbbbbbbbbbbbbbbbbbb', response);
         const qtdMsg = response.data.msg.length;
         if (qtdMsg === 0) {
 
-          console.log(qtdMsg);
-          console.log('RESPONSEDATRA', response.data)
           setDiscount(response.data.entities[0].coupon.coupon_value);
           getOrderData();
           toast.success("Cupom validado com sucesso!");
 
         } else {
           let messages = response.data.msg;
-          console.log("messages", messages);
           for (let i = 0; i < messages.length; i++) {
             let msgs = messages[i].split("\n");
             for (let message in msgs) {
@@ -91,6 +126,41 @@ const OrderSummary = () => {
       })
   }
 
+  const addCard = (request) =>{
+    requestCardService.addCard(request)
+      .then( response => {
+        
+      }).catch( err =>{
+
+      }) 
+  }
+
+  const setCardValue = (cardID, value) => {
+
+    value = Number(value);
+
+    console.log(value);
+
+    if(value < 0) {
+      toast.error("Valor inválido");
+      value = 0;
+    }
+
+    let requestCard = {};
+
+
+    requestCard.value = value;
+    requestCard.card_id = cardID;
+    requestCard.order_id = order.id;
+
+    addCard(requestCard);
+
+    console.log(requestCard);
+
+    return value;
+    
+  }
+
   const sendOrder = () => {
     orderService.sendOrder({ id: order.id, status: 'EM_ANALISE' })
       .then(response => {
@@ -98,8 +168,6 @@ const OrderSummary = () => {
         const qtdMsg = response.data.msg.length;
         if (qtdMsg === 0) {
 
-          console.log(qtdMsg);
-          console.log('RESPONSEDATRA', response.data);
           toast.success("Pedido realizado com sucesso!");
 
           setTimeout(() => {
@@ -108,7 +176,6 @@ const OrderSummary = () => {
 
         } else {
           let messages = response.data.msg;
-          console.log("messages", messages);
           for (let i = 0; i < messages.length; i++) {
             let msgs = messages[i].split("\n");
             for (let message in msgs) {
@@ -121,8 +188,8 @@ const OrderSummary = () => {
         toast.error(err)
       })
   }
-
-  return (
+  
+  return (     
     <>
       <div className="card p-5 d-flex flex-row justify-content-center flex-wrap">
         <ToastContainer />
@@ -132,7 +199,6 @@ const OrderSummary = () => {
         {cart?.length === 0 && <h1>Sem items</h1>}
         {cart?.map((item) => (
           <div key={item.product.id} className="card m-3">
-            {console.log('CARDS DENTRO DO MAP', item.product)}
             <div className="card-body" >
               <ul className="list-group list-group-flush">
                 <li className="list-group-item">Nome: {item.product.name}</li>
@@ -148,6 +214,42 @@ const OrderSummary = () => {
       </div>
 
       {/* Fim itens */}
+
+      <div className="card p-5 d-flex flex-row justify-content-center flex-wrap">
+
+      <div className="container  p-5 d-flex flex-row justify-content-center flex-wrap ">
+          <h1>Cartões</h1>
+        </div>        
+        <div className="container">
+          <Link className="btn btn-primary rainbow-bg " to={"/create_card"}>Cadastrar Cartão</Link>
+        </div>
+      {cards?.length === 0 && <h1>Sem cartões</h1>}
+        {cards?.map((card, index) => (
+          <div key={card.id + 'c'} className="card m-3">
+            
+            <div className="card-body" >
+              <ul className="list-group list-group-flush">
+                <li className="list-group-item">Apelido: {card.alias}</li>
+                <li className="list-group-item">Bandeira: {card.flag}</li>
+                <li className="list-group-item">Número: {card.number}</li>
+              </ul>
+              <input 
+                type="number"
+                className="form-control"
+                value={cards.gambi}
+               // defaultValue={cardValues[card.id]}
+                //defaultValue={0}
+               
+                onBlur={(e) => e.target.value = setCardValue(card.id, e.target.value)} 
+               // onChange={(e) => setCardValue(card.id, e.target.value)}
+              />
+             
+            </div>            
+          </div>
+        ))}      
+        </div>
+
+      {/* Fim cartao list */}
 
       <div className="container p-5 d-flex flex-row justify-content-center flex-wrap ">
         {address != null &&
@@ -165,19 +267,7 @@ const OrderSummary = () => {
             </div>
           </div>
         }
-        {card != null &&
-          <div key={card.id} className="card m-3">
-            <div className="card-body" >
-              <h3>Cartão Selecionado</h3>
-              <ul className="list-group list-group-flush">
-                <li className="list-group-item">Apelido: {card.alias}</li>
-                <li className="list-group-item">Bandeira: {card.flag}</li>
-                <li className="list-group-item">Número: {card.number}</li>
-                <button onClick={selectCard} className="btn btn-warning">Alterar Seleção</button>
-              </ul>
-            </div>
-          </div>
-        }
+        
         {cart != null && //espera os atributos carregarem
           <div className="row">
             <div className="container p-5 d-flex flex-row justify-content-center flex-wrap ">

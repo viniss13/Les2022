@@ -79,6 +79,19 @@ public class OrderDAO implements IDAO{
                 if(currentCoupon != null) {
                     currentCoupon.setQuantity(currentCoupon.getQuantity() - 1);
                 }
+
+                Double orderPrice = currentOrder.getOrder_value();
+                if(orderPrice < 0){
+                    orderPrice = orderPrice * -1;
+                    String exchangeCode = "TROCO" + orderPrice;
+                    Long quantity = 1L;
+                    CouponType type = CouponType.TROCO;
+                    Long clientID = currentOrder.getClient().getId();
+                    Coupon clientCoupon = new Coupon(exchangeCode, quantity, orderPrice, type, clientID);
+
+                    couponRepository.save(clientCoupon);
+
+                }
             } else if (status == OrderStatus.TROCA_CONCLUIDA){
                 List<Exchange> exchanges = currentOrder.getExchanges();
 

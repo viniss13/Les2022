@@ -44,7 +44,7 @@ const Address = () => {
       <ToastContainer />
 
       <Link 
-        className="btn btn-danger rainbow-bg mx-2" to={"/create_address"} >
+        className="btn btn-primary rainbow-bg mx-2" to={"/create_address"} >
               Cadastrar
       </Link>
       </div>
@@ -70,7 +70,7 @@ const Address = () => {
               Alterar
             </button>} */}
 
-            <Link className="btn btn-danger rainbow-bg mx-2" to={`update/${address.id}`} key={address.id} >
+            <Link className="btn btn-warning text-white rainbow-bg mx-2" to={`update/${address.id}`} key={address.id} >
               Alterar
             </Link>
 

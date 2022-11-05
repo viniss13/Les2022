@@ -1,0 +1,1 @@
+insert into _product (category, instrument_brand, instrument_family,`name`, price, product_description, stock) values ('SOPRO', 'HERING', 'GAITA', 'Gaita Cromatica', 25.0, 'Gaita', 25)

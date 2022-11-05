@@ -50,7 +50,7 @@ const Cards = () => {
 
       <div className="container">
         <Link
-          className="btn btn-danger rainbow-bg mx-2" to={"/create_card"} >
+          className="btn btn-primary rainbow-bg mx-2" to={"/create_card"} >
           Cadastrar
         </Link>
       </div>

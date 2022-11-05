@@ -14,8 +14,6 @@ const Cart = () => {
   let [quantity, setQuantity] = React.useState(0)
   const navigate = useNavigate();
 
-
-
   const getCartData = () => {
 
     const client_id = parseInt(LocalStorageService.obterItem("_logged_user").entities[0].id);

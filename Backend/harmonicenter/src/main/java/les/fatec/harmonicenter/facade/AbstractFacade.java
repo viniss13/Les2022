@@ -7,6 +7,7 @@ import les.fatec.harmonicenter.strategy.Address.VerifyExistingAddressID;
 import les.fatec.harmonicenter.strategy.Card.ValidateCardFields;
 import les.fatec.harmonicenter.strategy.Card.VerifyExistingCardID;
 import les.fatec.harmonicenter.strategy.IStrategy;
+import les.fatec.harmonicenter.strategy.Order.ValidateCards;
 import les.fatec.harmonicenter.strategy.Order.ValidateCoupon;
 import les.fatec.harmonicenter.strategy.Order.ValidateOrder;
 import les.fatec.harmonicenter.strategy.client.*;
@@ -60,6 +61,9 @@ public abstract class AbstractFacade {
 
     @Autowired
     ExchangeDAO exchangeDAO;
+
+    @Autowired
+    RequestCardDAO requestCardDAO;
 
     // ***************** Strategys ********************
 
@@ -122,6 +126,9 @@ public abstract class AbstractFacade {
     @Autowired
     ValidateChangePassword validateChangePassword;
 
+    @Autowired
+    ValidateCards validateCards;
+
     protected void initializeMaps() {
         daos.put(Client.class.getName(), clientDAO);
         daos.put(Address.class.getName(), addressDAO);
@@ -132,6 +139,7 @@ public abstract class AbstractFacade {
         daos.put(Order.class.getName(), orderDAO);
         daos.put(Coupon.class.getName(), couponDAO);
         daos.put(Exchange.class.getName(), exchangeDAO);
+        daos.put(Requestcard.class.getName(), requestCardDAO);
 
         //***************************** CLIENT *****************************
         List<IStrategy> createClient = new ArrayList<>();
@@ -289,6 +297,7 @@ public abstract class AbstractFacade {
         List<IStrategy> updateOrder = new ArrayList<>();
         updateOrder.add(validateCoupon);
         updateOrder.add(validateOrder);
+        updateOrder.add(validateCards);
         List<IStrategy> deleteOrder = new ArrayList<>();
         List<IStrategy> readByIDOrder = new ArrayList<>();
 
@@ -334,6 +343,23 @@ public abstract class AbstractFacade {
         exchangeRules.put(READ_BY_ID, readByIDExchange);
 
         this.rules.put(Exchange.class.getName(), exchangeRules);
+
+        /// ************ REQUEST_CARD ********************
+
+        List<IStrategy> createRequestCard = new ArrayList<>();
+        List<IStrategy> readRequestCard = new ArrayList<>();
+        List<IStrategy> updateRequestCard = new ArrayList<>();
+        List<IStrategy> deleteRequestCard = new ArrayList<>();
+        List<IStrategy> readByIDRequestCard = new ArrayList<>();
+
+        Map<String, List<IStrategy>> requestCardRules = new HashMap<>();
+        requestCardRules.put(CREATE, createRequestCard);
+        requestCardRules.put(READ, readRequestCard);
+        requestCardRules.put(UPDATE, updateRequestCard);
+        requestCardRules.put(DELETE, deleteRequestCard);
+        requestCardRules.put(READ_BY_ID, readByIDRequestCard);
+
+        this.rules.put(Requestcard.class.getName(), requestCardRules);
     }
 
 }

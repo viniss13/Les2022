@@ -50,6 +50,9 @@ public class Order extends DomainEntity {
     @OneToMany(mappedBy = "order")
     private List<Exchange> exchanges;
 
+    @OneToMany(mappedBy = "order")
+    private List<Requestcard> cards;
+
     public Order(Card card, Client client) {
         this.card = card;
         this.client = client;

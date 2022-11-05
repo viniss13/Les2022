@@ -7,8 +7,8 @@ class ProductService extends ApiService {
         super('/api/products');
     }
 
-    getAllProducts() {
-        return this.get(`/read`);
+    getAllProducts(search) {
+        return this.get(`/read?search=${search}`);
     }
     
     getById(id) {

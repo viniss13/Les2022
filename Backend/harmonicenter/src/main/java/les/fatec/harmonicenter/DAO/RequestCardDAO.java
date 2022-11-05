@@ -1,32 +1,47 @@
 package les.fatec.harmonicenter.DAO;
 
-import les.fatec.harmonicenter.domain.Address;
 import les.fatec.harmonicenter.domain.DomainEntity;
 import les.fatec.harmonicenter.domain.Product;
-import les.fatec.harmonicenter.repository.AddressRepository;
+import les.fatec.harmonicenter.domain.Requestcard;
 import les.fatec.harmonicenter.repository.ProductRepository;
+import les.fatec.harmonicenter.repository.RequestcardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class ProductDAO implements IDAO{
+public class RequestCardDAO implements IDAO{
 
     @Autowired
-    ProductRepository productRepository;
+    RequestcardRepository requestcardRepository;
 
     @Override
     public DomainEntity create(DomainEntity domainEntity) {
 
-        Product product = ( Product ) domainEntity;
-        product.setCreationDate(LocalDate.now());
-        productRepository.save(product);
+        Requestcard requestcard = ( Requestcard ) domainEntity;
 
-        return product;
+        Requestcard currentRequestCard = requestcardRepository.findByOrderIdAndCardId(requestcard.getOrder().getId(),
+                requestcard.getCard().getId());
+
+
+
+        if(requestcard.getBuyingValue() <= 0.0){
+            if(currentRequestCard != null) requestcardRepository.deleteById(currentRequestCard.getId());
+
+            return requestcard;
+        }
+
+        if(currentRequestCard == null) currentRequestCard = requestcard;
+
+
+        currentRequestCard.setBuyingValue(requestcard.getBuyingValue());
+        requestcard.setCreationDate(LocalDate.now());
+        requestcardRepository.save(currentRequestCard);
+
+        return requestcard;
     }
 
     @Override
@@ -54,7 +69,7 @@ public class ProductDAO implements IDAO{
     @Override
     public void delete(Long id) {
 
-        productRepository.deleteById(id);
+     //   productRepository.deleteById(id);
     }
 
     @Override
@@ -64,23 +79,23 @@ public class ProductDAO implements IDAO{
 
     @Override
     public DomainEntity readByID(long id) {
-        return productRepository.findById(id).get();
+        //return productRepository.findById(id).get();
+        return null;
     }
 
     @Override
     public List<DomainEntity> read(DomainEntity domainEntity) {
 
-        Product currentProduct = (Product) domainEntity;
-
-        String search = currentProduct.getSearch().toUpperCase();
-        if(search.isBlank()) search = "";
-        List<Product> result = productRepository.readWithFilter(search);
+        Requestcard requestcard = (Requestcard) domainEntity;
+        List<Requestcard> result = requestcardRepository.findAllByOrderId(requestcard.getOrder().getId());
         List<DomainEntity> entities = new ArrayList<>();
 
-        for(Product product : result ){
-            entities.add(product);
+        for(Requestcard currentCard : result ){
+            entities.add(currentCard);
         }
 
         return entities;
+
+
     }
 }

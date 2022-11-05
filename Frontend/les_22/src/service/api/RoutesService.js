@@ -34,7 +34,9 @@ function RoutesService() {
     <BrowserRouter>
       <Routes >
 
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Products />} />
+
+        <Route path="/home" element={<Home />} />
 
         <Route path="/login" element={<Login />} />
 

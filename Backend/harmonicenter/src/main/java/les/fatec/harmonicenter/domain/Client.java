@@ -74,8 +74,8 @@ public class Client extends DomainEntity {
     @OneToMany( mappedBy = "client")
     private List<Cart> cart;
 
-//    @OneToMany(mappedBy = "client")
-//    private List<Coupon> coupons = new ArrayList<>();
+    @OneToMany(mappedBy = "client")
+    private List<Coupon> coupons = new ArrayList<>();
 
     public Client(ClientSaveDTO clientDTO) {
         this.name = clientDTO.getName();
@@ -120,6 +120,5 @@ public class Client extends DomainEntity {
         this.password = clientChangePasswordDTO.getNew_password();
         this.confirmNewPassword = clientChangePasswordDTO.getConfirm_new_password();
         this.confirmOldPassword = clientChangePasswordDTO.getConfirm_old_password();
-
     }
 }

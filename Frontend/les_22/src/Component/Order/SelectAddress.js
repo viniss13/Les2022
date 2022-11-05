@@ -37,7 +37,7 @@ const SelectAddress = () => {
       .then( response => {
         
         toast.success("Endereço selecionado com sucesso!");
-        navigate("/select_card")
+        navigate("/order_summary")
         
       }).catch(error =>{
         toast.error("Erro ao selecionar endereço!")

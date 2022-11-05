@@ -10,11 +10,12 @@ const productService = new ProductService;
 const Products = () => {
 
   const [products, setProducts] = React.useState(null);
+  let [search, setSearch] = React.useState("");
 
   const navigate = useNavigate();
 
   const getProducts = () =>{
-    productService.getAllProducts()
+    productService.getAllProducts(search)
     .then( response => {
 
       setProducts(response.data.entities);
@@ -26,14 +27,23 @@ const Products = () => {
 
   React.useEffect( () => {       
     getProducts();
-  }, [])
-
-  const getDetails = (id) => {
-    
-  }
-
+    console.log(search)
+  }, [search])
+  
+  
   return (
     <>
+    <div className="form-group">
+        <input
+          type="text"
+          className="form-control col-6"
+          id="search"
+          placeholder="busca..."
+          name="search"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+    </div>
      <div className="card p-5 d-flex flex-row justify-content-center flex-wrap">
       <ToastContainer />
 
@@ -42,7 +52,6 @@ const Products = () => {
         {products?.length === 0 && <h1>Sem produtos</h1>}
         {products?.map((product) => (
           <div key={product.id} className="card m-3">
-            {console.log('PRODUCTS DENTRO DO MAP', products)}
             <div className="card-body" >
               <ul className="list-group list-group-flush">
                 <li className="list-group-item">Nome: {product.name}</li>
@@ -61,7 +70,7 @@ const Products = () => {
                 Excluir
               </button> */}
 
-              <Link className="btn btn-danger rainbow-bg mx-2" to={`details/${product.id}`} key={product.id} >
+              <Link className="btn btn-primary rainbow-bg mx-2" to={`/products/details/${product.id}`} key={product.id} >
               Detalhes
             </Link>
 

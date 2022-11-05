@@ -25,6 +25,7 @@ const AdmOrderDetails = () => {
     const [couponCode, setCouponCode] = React.useState(null);
     const [status, setStatus] = React.useState(null);
     const [exchanges, setExchanges] = React.useState(null);
+    const [cards, setCards] = React.useState(null);
 
     console.log(params);
 
@@ -38,6 +39,7 @@ const AdmOrderDetails = () => {
                 setAddress(response.data.address);
                 setCartValue(response.data.cart.total_value);
                 setExchanges(response.data.exchanges);
+                setCards(response.data.cards);
 
                 if (response.data.coupon != null) {
                     setCouponValue(response.data.coupon.coupon_value);
@@ -159,6 +161,24 @@ const AdmOrderDetails = () => {
                 ))}
             </div>
             {/* Fim pedidos de troca */}
+
+            <div className="card p-5 d-flex flex-row justify-content-center flex-wrap">
+
+        {cards?.length === 0 && <h1>Sem cartões</h1>}
+        {cards?.map((card, index) => (
+          <div key={card.id + 'c'} className="card m-3">
+
+            <div className="card-body" >
+              <ul className="list-group list-group-flush">
+                <li className="list-group-item">Apelido: {card.card.alias}</li>
+                <li className="list-group-item">Bandeira: {card.card.flag}</li>
+                <li className="list-group-item">Número: {card.card.number}</li>
+                <li className="list-group-item">Valor: R${card.buyingValue}</li>
+              </ul>
+            </div>
+          </div>
+        ))}
+      </div>
 
             <div className="container p-5 d-flex flex-row justify-content-center flex-wrap ">
                 {address != null &&

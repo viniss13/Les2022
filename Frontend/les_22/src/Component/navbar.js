@@ -30,11 +30,11 @@ function NavBar() {
                 </button>
                 <div className="collapse navbar-collapse justify-content-end" id="navbarResponsive">
                     <ul className="navbar-nav ">
-                        <NavBarItem href="/login" label="Login" />                        
+                        <NavBarItem href="/login" label="Login" />                                                
                         <NavBarItem onClick={logOut}  href="/login" label="Sair" />
-                        <NavBarItem href="/cart" label="Carrinho" />                        
+                        <NavBarItem href="/cart" label="Carrinho" />   
+                        <NavBarItem href="/user_home" label="Meu Perfil" />                       
 
-                                              
                     </ul>
                 </div>
             </div>
