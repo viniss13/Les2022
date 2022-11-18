@@ -45,14 +45,10 @@ const ClientManagement = () => {
                 <a className="btn btn-outline-dark list-group-item mx-2 my-2 border border-dark" href="/client_cards">Meus Cartões</a>
 
                 <a className="btn btn-outline-dark list-group-item mx-2 my-2 border border-dark" href="/client_adresses">Meus Endereços</a>
-
-                <a className="btn btn-outline-dark list-group-item mx-2 my-2 border border-dark" href="/products">Produtos</a>
-
+                
                 <a className="btn btn-outline-dark list-group-item mx-2 my-2 border border-dark" href="/orders">Meus Pedidos</a>
 
                 <a className="btn btn-outline-dark list-group-item mx-2 my-2 border border-dark" href="/coupons_list">Meus Cupons</a>
-
-
               </div>
 
             </div>

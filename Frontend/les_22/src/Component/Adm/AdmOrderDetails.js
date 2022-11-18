@@ -94,14 +94,14 @@ const AdmOrderDetails = () => {
 
     }
 
-    const rejectExchange = () =>{
+    const rejectExchange = () => {
         orderService.updateOrder({ "id": params.id, "status": "TROCA_REJEITADA" })
-                .then(response => {
-                    toast.dark("Status do Pedido atualizado com sucesso!")
-                    orderDetails();
-                }).catch(err => {
+            .then(response => {
+                toast.dark("Status do Pedido atualizado com sucesso!")
+                orderDetails();
+            }).catch(err => {
 
-                })
+            })
     }
 
     React.useEffect(() => {
@@ -164,21 +164,21 @@ const AdmOrderDetails = () => {
 
             <div className="card p-5 d-flex flex-row justify-content-center flex-wrap">
 
-        {cards?.length === 0 && <h1>Sem cartões</h1>}
-        {cards?.map((card, index) => (
-          <div key={card.id + 'c'} className="card m-3">
+                {cards?.length === 0 && <h1>Sem cartões</h1>}
+                {cards?.map((card, index) => (
+                    <div key={card.id + 'c'} className="card m-3">
 
-            <div className="card-body" >
-              <ul className="list-group list-group-flush">
-                <li className="list-group-item">Apelido: {card.card.alias}</li>
-                <li className="list-group-item">Bandeira: {card.card.flag}</li>
-                <li className="list-group-item">Número: {card.card.number}</li>
-                <li className="list-group-item">Valor: R${card.buyingValue}</li>
-              </ul>
+                        <div className="card-body" >
+                            <ul className="list-group list-group-flush">
+                                <li className="list-group-item">Apelido: {card.card.alias}</li>
+                                <li className="list-group-item">Bandeira: {card.card.flag}</li>
+                                <li className="list-group-item">Número: {card.card.number}</li>
+                                <li className="list-group-item">Valor: R${card.buyingValue}</li>
+                            </ul>
+                        </div>
+                    </div>
+                ))}
             </div>
-          </div>
-        ))}
-      </div>
 
             <div className="container p-5 d-flex flex-row justify-content-center flex-wrap ">
                 {address != null &&

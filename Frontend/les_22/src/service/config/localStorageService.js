@@ -27,7 +27,7 @@ export default class LocalStorageService {
    }
    const itemID = item.id;
    for(let i = 0; i < cart.length; i++){
-    if(cart[i].id == itemID){
+    if(cart[i].id === itemID){
       cart[i].quantity = item.quantity;
       localStorage.setItem("cart", JSON.stringify(cart));
       return "ENTROU AQUI";

@@ -11,13 +11,17 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-
+// ME INDICA NA SUA EMPRESA ARR FINI https://github.com/LucasDonizeti/e-commerce-notebook zoas kk
 @Getter
 @Setter
 @NoArgsConstructor
@@ -63,18 +67,23 @@ public class Client extends DomainEntity {
     private Gender gender;
 
     @OneToMany(mappedBy = "client")
+   // @Fetch(FetchMode.JOIN)
     private List<Address> addressList;
 
     @OneToMany(mappedBy = "client")
+   // @LazyCollection(LazyCollectionOption.FALSE)
     private List<Card> cardList;
 
     @OneToMany(mappedBy = "client")
+   // @LazyCollection(LazyCollectionOption.FALSE)
     private List<Order> orders;
 
     @OneToMany( mappedBy = "client")
+    //@LazyCollection(LazyCollectionOption.FALSE)
     private List<Cart> cart;
 
     @OneToMany(mappedBy = "client")
+   // @LazyCollection(LazyCollectionOption.FALSE)
     private List<Coupon> coupons = new ArrayList<>();
 
     public Client(ClientSaveDTO clientDTO) {

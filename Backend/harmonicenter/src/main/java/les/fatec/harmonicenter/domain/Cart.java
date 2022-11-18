@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -26,6 +28,7 @@ public class Cart extends DomainEntity {
     private Client client;
 
     @OneToMany(mappedBy = "cart")
+   // @LazyCollection(LazyCollectionOption.FALSE)
     private List<Item> items;
 
     @Column

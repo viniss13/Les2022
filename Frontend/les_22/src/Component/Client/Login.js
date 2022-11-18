@@ -36,7 +36,7 @@ const Login = () => {
             }
           }
         } else {
-          navigate('/user_home');
+          navigate('/');
           toast('Login feito com sucesso!');
         }
 

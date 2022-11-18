@@ -41,7 +41,7 @@ const AdmOrders = () => {
                 <li className="list-group-item">Id do pedido: {order.id}</li>
 
                 <li className="list-group-item">Status: {
-                  <pp className={{
+                  <p className={{
                     'DRAFT': 'text-secondary',
                     'EM_ANALISE': 'text-info',
                     'EM_TRANSPORTE': 'text-info',
@@ -50,7 +50,7 @@ const AdmOrders = () => {
                     'RECUSADO': 'text-danger',
                     'FINALIZADO': 'text-success'
                   }[order.status]}>{order.status}
-                  </pp>}
+                  </p>}
                 </li>
                 <li className="list-group-item">Valor total: R$ {order.order_value}</li>
                 <Link className="btn btn-danger rainbow-bg mx-2" to={`details/${order.id}`} key={order.id} >

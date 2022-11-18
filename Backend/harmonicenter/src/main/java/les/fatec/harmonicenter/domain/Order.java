@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.List;
@@ -48,9 +50,11 @@ public class Order extends DomainEntity {
 
 
     @OneToMany(mappedBy = "order")
+   // @LazyCollection(LazyCollectionOption.FALSE)
     private List<Exchange> exchanges;
 
     @OneToMany(mappedBy = "order")
+   // @LazyCollection(LazyCollectionOption.FALSE)
     private List<Requestcard> cards;
 
     public Order(Card card, Client client) {

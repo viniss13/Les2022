@@ -26,6 +26,7 @@ import AdmOrderDetails from '../../Component/Adm/AdmOrderDetails';
 import Exchange from '../../Component/Order/Exchange';
 import ClientCoupons from '../../Component/Client/ClientCoupons';
 import ClientPasswordUpdate from '../../Component/Client/ClientPasswordUpdate';
+import Dashboard from '../../Component/Adm/Dashboard';
 
 
 
@@ -85,6 +86,9 @@ function RoutesService() {
         <Route path="/adm_orders/details/:id" element={<AdmOrderDetails />} />
 
         <Route path="/exchange/:id" element={<Exchange />} />
+
+        <Route path="/dashboard" element={<Dashboard />} />
+
         
       </Routes>
     </BrowserRouter>
