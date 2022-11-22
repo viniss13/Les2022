@@ -33,7 +33,7 @@ const OrderSummary = () => {
 
   let testee = "";
 
- // let cardValues = {};
+  // let cardValues = {};
 
   const navigate = useNavigate();
 
@@ -53,19 +53,19 @@ const OrderSummary = () => {
         // setCouponValue(response.data.entities[0].)
         setCoupon(response.data.entities[0].coupon);
         setCouponCode(response.data.entities[0].coupon.code);
-        
+
       }).catch(error => {
         // toast.error("Não foi possível executar o comando");
-      }).finally( final => {
+      }).finally(final => {
         getAllCards();
       })
   }
 
-  React.useEffect(() => {   
+  React.useEffect(() => {
     console.log("cardvalues", cardValues);
   }, [cardValues])
 
-  React.useEffect(() => {   
+  React.useEffect(() => {
     getOrderData();
   }, [])
 
@@ -89,13 +89,13 @@ const OrderSummary = () => {
 
         let myCardValues = {};
 
-        for(let i = 0; i < cards.length; i++){
+        for (let i = 0; i < cards.length; i++) {
           myCardValues[cards[i].id] = 0;
         }
 
-        console.log("ihuuuu",myCardValues);
+        console.log("ihuuuu", myCardValues);
         setCardValues(myCardValues);
-        
+
 
       }).catch(error => {
         console.error("erro recuperando cartões do usuário", id, error)
@@ -126,13 +126,13 @@ const OrderSummary = () => {
       })
   }
 
-  const addCard = (request) =>{
+  const addCard = (request) => {
     requestCardService.addCard(request)
-      .then( response => {
-        
-      }).catch( err =>{
+      .then(response => {
 
-      }) 
+      }).catch(err => {
+
+      })
   }
 
   const setCardValue = (cardID, value) => {
@@ -141,7 +141,7 @@ const OrderSummary = () => {
 
     console.log(value);
 
-    if(value < 0) {
+    if (value < 0) {
       toast.error("Valor inválido");
       value = 0;
     }
@@ -158,7 +158,7 @@ const OrderSummary = () => {
     console.log(requestCard);
 
     return value;
-    
+
   }
 
   const sendOrder = () => {
@@ -188,8 +188,8 @@ const OrderSummary = () => {
         toast.error(err)
       })
   }
-  
-  return (     
+
+  return (
     <>
       <div className="card p-5 d-flex flex-row justify-content-center flex-wrap">
         <ToastContainer />
@@ -201,6 +201,7 @@ const OrderSummary = () => {
           <div key={item.product.id} className="card m-3">
             <div className="card-body" >
               <ul className="list-group list-group-flush">
+                <li className="list-group-item"> <img src={item.product.imageUrl} width="250" height="250" style={{ alignItems: "center", justifyContent: "center" }} /> </li>
                 <li className="list-group-item">Nome: {item.product.name}</li>
                 <li className="list-group-item">Preço: R$ {item.product.price}</li>
                 <li className="list-group-item">Quantidade: {item.quantity}</li>
@@ -217,37 +218,37 @@ const OrderSummary = () => {
 
       <div className="card p-5 d-flex flex-row justify-content-center flex-wrap">
 
-      <div className="container  p-5 d-flex flex-row justify-content-center flex-wrap ">
+        <div className="container  p-5 d-flex flex-row justify-content-center flex-wrap ">
           <h1>Cartões</h1>
-        </div>        
+        </div>
         <div className="container">
           <Link className="btn btn-primary rainbow-bg " to={"/create_card"}>Cadastrar Cartão</Link>
         </div>
-      {cards?.length === 0 && <h1>Sem cartões</h1>}
+        {cards?.length === 0 && <h1>Sem cartões</h1>}
         {cards?.map((card, index) => (
           <div key={card.id + 'c'} className="card m-3">
-            
+
             <div className="card-body" >
               <ul className="list-group list-group-flush">
                 <li className="list-group-item">Apelido: {card.alias}</li>
                 <li className="list-group-item">Bandeira: {card.flag}</li>
                 <li className="list-group-item">Número: {card.number}</li>
               </ul>
-              <input 
+              <input
                 type="number"
                 className="form-control"
                 value={cards.gambi}
-               // defaultValue={cardValues[card.id]}
+                // defaultValue={cardValues[card.id]}
                 //defaultValue={0}
-               
-                onBlur={(e) => e.target.value = setCardValue(card.id, e.target.value)} 
-               // onChange={(e) => setCardValue(card.id, e.target.value)}
+
+                onBlur={(e) => e.target.value = setCardValue(card.id, e.target.value)}
+              // onChange={(e) => setCardValue(card.id, e.target.value)}
               />
-             
-            </div>            
+
+            </div>
           </div>
-        ))}      
-        </div>
+        ))}
+      </div>
 
       {/* Fim cartao list */}
 
@@ -267,7 +268,7 @@ const OrderSummary = () => {
             </div>
           </div>
         }
-        
+
         {cart != null && //espera os atributos carregarem
           <div className="row">
             <div className="container p-5 d-flex flex-row justify-content-center flex-wrap ">

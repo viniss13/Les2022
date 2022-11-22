@@ -3,6 +3,7 @@ package les.fatec.harmonicenter.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import les.fatec.harmonicenter.DTO.CardDTO;
 import les.fatec.harmonicenter.DTO.ItemDTO;
+import les.fatec.harmonicenter.DTO.ItemGenerateDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -46,5 +47,11 @@ public class Item extends DomainEntity {
 
     public Item(Long item_id) {
         super(item_id);
+    }
+
+    public Item(ItemGenerateDTO itemGenerateDTO) {
+        super(itemGenerateDTO.getCreation_date());
+        this.quantity = itemGenerateDTO.getQuantity();
+        this.product = new Product(itemGenerateDTO.getProduct());
     }
 }

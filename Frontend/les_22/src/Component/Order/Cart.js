@@ -139,6 +139,7 @@ const Cart = () => {
           <div key={item.product.id} className="card m-3">
             <div className="card-body" >
               <ul className="list-group list-group-flush">
+              <li className="list-group-item"> <img src={item.product.imageUrl} width="250" height="250" style={{alignItems: "center", justifyContent: "center"}} /> </li>
                 <li className="list-group-item">Nome: {item.product.name}</li>
                 <li className="list-group-item">Preço: R$ {item.product.price}</li>
                 <li className="list-group-item">Estoque: {item.product.stock}</li>

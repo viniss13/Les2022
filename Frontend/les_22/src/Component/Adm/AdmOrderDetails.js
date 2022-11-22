@@ -123,6 +123,7 @@ const AdmOrderDetails = () => {
                         {console.log('CARDS DENTRO DO MAP', item.product)}
                         <div className="card-body" >
                             <ul className="list-group list-group-flush">
+                                <li className="list-group-item"> <img src={item.product.imageUrl} width="250" height="250" style={{ alignItems: "center", justifyContent: "center" }} /> </li>
                                 <li className="list-group-item">Nome: {item.product.name}</li>
                                 <li className="list-group-item">Preço: R$ {item.product.price}</li>
                                 <li className="list-group-item">Quantidade: {item.quantity}</li>

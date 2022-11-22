@@ -42,4 +42,6 @@ public abstract class DomainEntity extends Result implements Serializable{
     public DomainEntity(Long id) {
         this.id = id;
     }
+
+    public DomainEntity(LocalDate localDate) {this.creationDate = localDate;}
 }

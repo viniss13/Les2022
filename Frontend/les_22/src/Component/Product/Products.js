@@ -17,7 +17,7 @@ const Products = () => {
   const getProducts = () =>{
     productService.getAllProducts(search)
     .then( response => {
-
+      console.log("TODOS PRODUTOS", response.data.entities);
       setProducts(response.data.entities);
 
     }).catch( error => {
@@ -52,8 +52,10 @@ const Products = () => {
         {products?.length === 0 && <h1>Sem produtos</h1>}
         {products?.map((product) => (
           <div key={product.id} className="card m-3">
+            {console.log('PRODCUT', product.imgUrl)}
             <div className="card-body" >
               <ul className="list-group list-group-flush">
+                <li className="list-group-item"> <img src={product.imageUrl} width="250" height="250" style={{alignItems: "center", justifyContent: "center"}} /> </li>
                 <li className="list-group-item">Nome: {product.name}</li>
                 <li className="list-group-item">Preço: R$ {product.price}</li>
                 <li className="list-group-item">Estoque: {product.stock}</li>

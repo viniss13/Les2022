@@ -27,4 +27,6 @@ public class ProductDTO {
     private InstrumentFamily instrumentFamily;
 
     private InstrumentBrand instrumentBrand;
+
+    private String imageUrl;
 }

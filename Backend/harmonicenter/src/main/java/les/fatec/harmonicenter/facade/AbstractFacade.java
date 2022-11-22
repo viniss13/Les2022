@@ -65,6 +65,9 @@ public abstract class AbstractFacade {
     @Autowired
     RequestCardDAO requestCardDAO;
 
+    @Autowired
+    ItemDAO itemDAO;
+
     // ***************** Strategys ********************
 
     @Autowired
@@ -140,6 +143,7 @@ public abstract class AbstractFacade {
         daos.put(Coupon.class.getName(), couponDAO);
         daos.put(Exchange.class.getName(), exchangeDAO);
         daos.put(Requestcard.class.getName(), requestCardDAO);
+        daos.put(Item.class.getName(), itemDAO);
 
         //***************************** CLIENT *****************************
         List<IStrategy> createClient = new ArrayList<>();
@@ -360,6 +364,8 @@ public abstract class AbstractFacade {
         requestCardRules.put(READ_BY_ID, readByIDRequestCard);
 
         this.rules.put(Requestcard.class.getName(), requestCardRules);
+
+
     }
 
 }

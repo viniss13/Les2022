@@ -11,6 +11,10 @@ class DashboardService extends ApiService {
     return this.get('/read');
   }
 
+  readByDate(startDate,endDate) {
+    return this.get(`/read_by_date?startDate=${startDate}&endDate=${endDate}`);
+  }
+
 
 
 }

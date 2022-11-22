@@ -22,6 +22,7 @@ const ProductDetails = () => {
   const [category, setCategory] = React.useState("");
   const [family, setFamily] = React.useState("");
   const [brand, setBrand] = React.useState("");
+  const [imageUrl, setImage] = React.useState("");
 
   // const [quantity, dispatch] = React.useReducer(reducer, 0);
 
@@ -39,6 +40,7 @@ const ProductDetails = () => {
       .then(response => {
         console.log('RESPONSE', response)
 
+        setImage(response.data.imageUrl);
         setStock(response.data.stock);
         setName(response.data.name);
         setDescription(response.data.productDescription);
@@ -136,8 +138,8 @@ const ProductDetails = () => {
 
           <ToastContainer />
 
-          <div className="col-lg-4">
-            <img className="img-fluid rounded mb-4" src="https://img.elo7.com.br/product/zoom/264B62C/kit-placas-instrumentos-musicais-decoracao.jpg" alt="" />
+          <div className="col-lg-4">            
+            <img className="img-fluid rounded mb-4" src={imageUrl} />            
           </div>
           <div className="col-lg-3">
             <h3 className="mt-4 mb-3"><strong>{name}</strong></h3>

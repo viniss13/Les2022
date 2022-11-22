@@ -24,6 +24,7 @@ const AdmManagement = () => {
               <div className="card border-0 col-6 my-3 px-5 py-5 " style={{ width: '600px' }}>
 
                 <a className="btn btn-outline-dark list-group-item mx-2 my-2 border border-dark" href="/adm_orders">Pedidos</a>
+                <a className="btn btn-outline-dark list-group-item mx-2 my-2 border border-dark" href="/dashboard">Dashboard</a>
 
               </div>
             </div>

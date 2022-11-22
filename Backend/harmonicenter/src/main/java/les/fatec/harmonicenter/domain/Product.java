@@ -31,6 +31,9 @@ public class Product extends DomainEntity{
     @Column(name = "price")
     private Double price;
 
+    @Column(name = "imageUrl")
+    private String imageUrl;
+
     @Enumerated(EnumType.STRING)
     @Column( name = "category")
     private Category category;
@@ -40,7 +43,7 @@ public class Product extends DomainEntity{
     private InstrumentFamily instrumentFamily;
 
     @Enumerated(EnumType.STRING)
-    @Column( name = "instrumentBrand")
+    @Column( name = "instrumentBrand", length=1000)
     private InstrumentBrand instrumentBrand;
 
     @Transient
@@ -54,6 +57,7 @@ public class Product extends DomainEntity{
         this.category = dto.getCategory();
         this.instrumentFamily = dto.getInstrumentFamily();
         this.instrumentBrand = dto.getInstrumentBrand();
+        this.imageUrl = dto.getImageUrl();
     }
 
     public Product(Long id) {super(id);}
